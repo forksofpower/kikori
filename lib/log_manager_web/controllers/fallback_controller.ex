@@ -21,4 +21,11 @@ defmodule LogManagerWeb.FallbackController do
     |> put_view(LogManagerWeb.ErrorView)
     |> render(:"404")
   end
+
+  # authentication error
+  def call(conn, {:error, :unauthorized}) do
+    conn
+    |> put_status(:unauthorized)
+    |> json(%{error: "Login error"})
+  end
 end

@@ -22,7 +22,9 @@ defmodule LogManagerWeb.Router do
   scope "/api/v1", LogManagerWeb do
     pipe_through :api
 
-    resources "/users", UserController, only: [:create, :show]
+    post "/sign-up", UserController, :create
+    post "/sign-in", UserController, :sign_in
+    # resources "/users", UserController, only: [:create, :show]
   end
 
   # Other scopes may use custom stacks.
