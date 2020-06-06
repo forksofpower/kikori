@@ -1,6 +1,8 @@
 defmodule LogManagerWeb.Router do
   use LogManagerWeb, :router
 
+  alias LogManager.Guardian
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -11,6 +13,10 @@ defmodule LogManagerWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :jwt_authenticated do
+    plug Guardian.AuthPipeline
   end
 
   scope "/", LogManagerWeb do
@@ -24,8 +30,14 @@ defmodule LogManagerWeb.Router do
 
     post "/sign-up", UserController, :create
     post "/sign-in", UserController, :sign_in
-    # resources "/users", UserController, only: [:create, :show]
   end
+
+  scope "/api/v1", LogManagerWeb do
+    pipe_through [:api, :jwt_authenticated]
+    resources "/users", UserController, only: [:index, :show]
+    get "/me", UserController, :show
+  end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", LogManagerWeb do

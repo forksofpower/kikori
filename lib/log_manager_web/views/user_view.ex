@@ -13,10 +13,7 @@ defmodule LogManagerWeb.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id,
       email: user.email,
-      name: user.name,
-      phone: user.phone,
-      password_hash: user.password_hash,
-      is_admin: user.is_admin}
+      name: user.name}
   end
 
   def render("jwt.json", %{jwt: jwt}) do
