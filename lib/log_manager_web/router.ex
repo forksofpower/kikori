@@ -19,6 +19,12 @@ defmodule LogManagerWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/api/v1", LogManagerWeb do
+    pipe_through :api
+
+    resources "/users", UserController, only: [:create, :show]
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", LogManagerWeb do
   #   pipe_through :api
