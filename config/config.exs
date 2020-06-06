@@ -27,15 +27,14 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 # Guardian Auth
-config :guardian, Guardian,
-  allowed_algos: ["HS512"], # optional
-  verify_module: Guardian.JWT,  # optional
-  issuer: "LogManager",
-  ttl: { 30, :days },
-  allowed_drift: 2000,
-  verify_issuer: true, # optional
-  secret_key: "ednkXywWll1d2svDEpbA39R5kfkc9l96j0+u7A8MgKM+pbwbeDsuYB8MP2WUW1hf", # Insert previously generated secret key!
-  serializer: LogManager.GuardianSerializer
+config :log_manager, LogManager.Guardian,
+        issuer: "LogManager",
+        secret_key: "I1L3XdEs8+JyRTTue5VWDUWZ0mFya06OKp6LHOSpLO3si51ht9HZxd3gpmTsbmA5"
+  # allowed_algos: ["HS512"], # optional
+  # verify_module: Guardian.JWT,  # optional
+  # ttl: { 30, :days },
+  # allowed_drift: 2000,
+  # verify_issuer: true, # optional
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
