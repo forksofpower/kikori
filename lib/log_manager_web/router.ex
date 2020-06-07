@@ -30,12 +30,11 @@ defmodule LogManagerWeb.Router do
 
     post "/sign-up", UserController, :create
     post "/sign-in", UserController, :sign_in
-  end
 
-  scope "/api/v1", LogManagerWeb do
-    pipe_through [:api, :jwt_authenticated]
+    pipe_through :jwt_authenticated
     resources "/users", UserController, only: [:index, :show]
     resources "/projects", ProjectController, except: [:new, :edit]
+    resources "/logs", LogMessageController, except: [:new, :edit]
     get "/me", UserController, :show
   end
 
