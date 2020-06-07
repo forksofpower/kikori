@@ -103,4 +103,100 @@ defmodule LogManager.Projects do
   def change_project(%Project{} = project, attrs \\ %{}) do
     Project.changeset(project, attrs)
   end
+
+  alias LogManager.Projects.LogMessage
+
+  @doc """
+  Returns the list of log_messages.
+
+  ## Examples
+
+      iex> list_log_messages()
+      [%LogMessage{}, ...]
+
+  """
+  def list_log_messages do
+    Repo.all(LogMessage)
+  end
+
+  @doc """
+  Gets a single log_message.
+
+  Raises `Ecto.NoResultsError` if the Log message does not exist.
+
+  ## Examples
+
+      iex> get_log_message!(123)
+      %LogMessage{}
+
+      iex> get_log_message!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_log_message!(id), do: Repo.get!(LogMessage, id)
+
+  @doc """
+  Creates a log_message.
+
+  ## Examples
+
+      iex> create_log_message(%{field: value})
+      {:ok, %LogMessage{}}
+
+      iex> create_log_message(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_log_message(attrs \\ %{}) do
+    %LogMessage{}
+    |> LogMessage.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a log_message.
+
+  ## Examples
+
+      iex> update_log_message(log_message, %{field: new_value})
+      {:ok, %LogMessage{}}
+
+      iex> update_log_message(log_message, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_log_message(%LogMessage{} = log_message, attrs) do
+    log_message
+    |> LogMessage.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a log_message.
+
+  ## Examples
+
+      iex> delete_log_message(log_message)
+      {:ok, %LogMessage{}}
+
+      iex> delete_log_message(log_message)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_log_message(%LogMessage{} = log_message) do
+    Repo.delete(log_message)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking log_message changes.
+
+  ## Examples
+
+      iex> change_log_message(log_message)
+      %Ecto.Changeset{data: %LogMessage{}}
+
+  """
+  def change_log_message(%LogMessage{} = log_message, attrs \\ %{}) do
+    LogMessage.changeset(log_message, attrs)
+  end
 end
