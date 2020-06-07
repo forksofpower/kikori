@@ -1,5 +1,6 @@
 defmodule LogManagerWeb.UserController do
   use LogManagerWeb, :controller
+  require IEx
 
   alias LogManager.Guardian
   alias LogManager.Accounts
@@ -12,27 +13,22 @@ defmodule LogManagerWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
-
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params),
          {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
-      conn |> render("jwt.json", jwt: token)
+      conn |> render("auth_success.json", %{user: user, token: token})
+    else
+      {:error, changeset} -> conn |> render(changeset.errors)
     end
   end
-  # def create(conn, %{"user" => user_params}) do
-  #   with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
-  #     conn
-  #     |> put_status(:created)
-  #     |> put_resp_header("location", Routes.user_path(conn, :show, user))
-  #     |> render("show.json", user: user)
-  #   end
-  # end
 
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
     render(conn, "show.json", user: user)
   end
 
+  # GET /me
+  # returns the current user
   def show(conn, _params) do
     user = Guardian.Plug.current_resource(conn)
     conn |> render("user.json", user: user)
@@ -56,8 +52,10 @@ defmodule LogManagerWeb.UserController do
 
   def sign_in(conn, %{"email" => email, "password" => password}) do
     case Accounts.token_sign_in(email, password) do
-      {:ok, token, _claims} -> conn |> render("jwt.json", jwt: token)
-      _ -> {:error, :unauthorized}
+      {:ok, token, _claims} ->
+        conn |> render("jwt.json", %{jwt: token})
+      _ ->
+        {:error, :unauthorized}
     end
   end
 end

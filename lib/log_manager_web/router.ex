@@ -12,6 +12,7 @@ defmodule LogManagerWeb.Router do
   end
 
   pipeline :api do
+    plug CORSPlug, origin: ["http://localhost:3000", "http//localhost:4000"]
     plug :accepts, ["json"]
   end
 
@@ -29,8 +30,10 @@ defmodule LogManagerWeb.Router do
     # public
     pipe_through :api
 
-    post "/sign-up", UserController, :create
-    post "/sign-in", UserController, :sign_in
+    post "/signup", UserController, :create
+    options "/signup", UserController, :options
+    post "/signin", UserController, :sign_in
+    options "/signin", UserController, :options
 
     # private
     pipe_through :jwt_authenticated

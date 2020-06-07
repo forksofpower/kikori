@@ -24,9 +24,9 @@ defmodule LogManager.Accounts.User do
     |> cast(attrs, [:email, :name, :password, :password_confirmation])
     |> validate_required([:email, :name, :password, :password_confirmation])
     |> validate_format(:email, ~r/@/)
+    |> unique_constraint(:email)
     |> validate_length(:password, min: 8) # check password length is >= 8
     |> validate_confirmation(:password)
-    |> unique_constraint(:email)
     |> put_password_hash
   end
 

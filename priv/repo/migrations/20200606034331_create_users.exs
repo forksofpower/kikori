@@ -10,5 +10,6 @@ defmodule LogManager.Repo.Migrations.CreateUsers do
       timestamps()
     end
 
+    create unique_index(:users, :email)
   end
 end
