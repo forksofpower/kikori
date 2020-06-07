@@ -6,7 +6,7 @@ defmodule LogManager.Projects do
   import Ecto.Query, warn: false
   alias LogManager.Repo
 
-  alias LogManager.Projects.Project
+  alias LogManager.Projects.{Project,LogMessage}
 
   @doc """
   Returns the list of projects.
@@ -116,7 +116,13 @@ defmodule LogManager.Projects do
 
   """
   def list_log_messages do
-    Repo.all(LogMessage)
+    Repo.all from log in LogMessage, preload: [:project]
+  end
+
+  def list_project_log_messages(project_id) do
+    Repo.get(Project, project_id)
+      |> Ecto.assoc(:log_messages)
+      |> Repo.all
   end
 
   @doc """
@@ -133,7 +139,7 @@ defmodule LogManager.Projects do
       ** (Ecto.NoResultsError)
 
   """
-  def get_log_message!(id), do: Repo.get!(LogMessage, id)
+  def get_log_message!(id), do: Repo.get!(LogMessage, id) |> Repo.preload(:project)
 
   @doc """
   Creates a log_message.
@@ -151,6 +157,7 @@ defmodule LogManager.Projects do
     %LogMessage{}
     |> LogMessage.changeset(attrs)
     |> Repo.insert()
+    # |> Repo.preload(:project)
   end
 
   @doc """

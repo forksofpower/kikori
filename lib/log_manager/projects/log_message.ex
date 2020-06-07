@@ -2,11 +2,13 @@ defmodule LogManager.Projects.LogMessage do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias LogManager.Projects.Project
+
   schema "log_messages" do
     field :data, :string
     field :request_data, :string
     field :type, :string
-    field :project_id, :id
+    belongs_to(:project, Project, foreign_key: :project_id)
 
     timestamps()
   end
@@ -14,7 +16,7 @@ defmodule LogManager.Projects.LogMessage do
   @doc false
   def changeset(log_message, attrs) do
     log_message
-    |> cast(attrs, [:type, :request_data, :data])
-    |> validate_required([:type, :request_data, :data])
+    |> cast(attrs, [:type, :request_data, :data, :project_id])
+    |> validate_required([:type, :request_data, :data, :project_id])
   end
 end
