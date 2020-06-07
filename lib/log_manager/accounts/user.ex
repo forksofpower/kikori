@@ -8,6 +8,9 @@ defmodule LogManager.Accounts.User do
     field :email, :string
     field :name, :string
     field :password_hash, :string
+
+    has_many :projects, LogManager.Projects.Project
+
     # virtual fields
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true

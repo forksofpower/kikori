@@ -51,7 +51,8 @@ defmodule LogManager.Accounts do
 
   """
   def list_users do
-    Repo.all(User)
+    # return all users with their projects
+    Repo.all from u in User, preload: [:projects]
   end
 
   @doc """
@@ -68,7 +69,9 @@ defmodule LogManager.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do
+    Repo.get!(User, id) |> Repo.preload(:projects)
+  end
 
   @doc """
   Creates a user.
