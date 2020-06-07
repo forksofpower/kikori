@@ -35,6 +35,7 @@ defmodule LogManagerWeb.Router do
   scope "/api/v1", LogManagerWeb do
     pipe_through [:api, :jwt_authenticated]
     resources "/users", UserController, only: [:index, :show]
+    resources "/projects", ProjectController, except: [:new, :edit]
     get "/me", UserController, :show
   end
 
