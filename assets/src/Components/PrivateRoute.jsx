@@ -1,21 +1,21 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectAuth } from '../services/auth.slice'
+import { selectAuth, selectCurrentUser } from '../services/auth.slice'
 import { isEmpty } from '../helpers'
 
 const PrivateRoute = ({children, ...remainingProps}) => {
-    const auth = useSelector(selectAuth);
+    const currentUser = useSelector(selectCurrentUser);
     return (
         <Route 
             {...remainingProps}
             render={({ location }) => 
-                !isEmpty(auth) ? (
+                !isEmpty(currentUser) ? (
                     children
                 ) : (
                     <Redirect
                         to={{
-                            pathname: 'login',
+                            pathname: '/login',
                             state: { from: location }
                         }}
                     />

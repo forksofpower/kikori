@@ -48,6 +48,7 @@ defmodule LogManagerWeb.Router do
 
     resources "/logs", LogMessageController, except: [:new, :edit]
     get "/me", UserController, :show
+    options "/me", UserController, :options
   end
 
 

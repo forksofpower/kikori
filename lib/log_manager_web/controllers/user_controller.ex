@@ -31,7 +31,7 @@ defmodule LogManagerWeb.UserController do
   # returns the current user
   def show(conn, _params) do
     user = Guardian.Plug.current_resource(conn)
-    conn |> render("user.json", user: user)
+    conn |> render("show.json", user: user)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
