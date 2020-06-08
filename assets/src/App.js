@@ -16,6 +16,7 @@ import Projects from './routes/Projects'
 import Signup from './routes/Signup';
 
 import './App.css';
+import PrivateRoute from './Components/PrivateRoute';
 
 const App = () => {
   // useSelector(auth)
@@ -24,8 +25,12 @@ const App = () => {
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/console" component={Console} />
-      <Route path="/login" component={Login} />
-      <Route path="/projects" component={Projects} />
+      <PrivateRoute path="/projects">
+        <Projects />
+      </PrivateRoute>
+      <PublicRoute path="/login">
+        <Login />
+      </PublicRoute>
       <PublicRoute path="/signup">
         <Signup />
       </PublicRoute>
