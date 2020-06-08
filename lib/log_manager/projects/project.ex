@@ -7,6 +7,7 @@ defmodule LogManager.Projects.Project do
 
   schema "projects" do
     field :name, :string
+    field :guid, :binary_id
     belongs_to(:user, User, foreign_key: :user_id)
 
     has_many :log_messages, LogMessage
