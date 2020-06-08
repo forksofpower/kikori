@@ -1,37 +1,31 @@
 import React from 'react'
 import { useState } from 'react'
 
+import { useSelector, useDispatch } from 'react-redux';
+import { signUp, selectAuth } from '../services/auth.slice';
+
 const Signup = () => {
-    let [name, setName] = useState("")
-    let [email, setEmail] = useState("")
-    let [password, setPassword] = useState("")
-    let [passwordConfirmation, setPasswordConfirmation] = useState("")
+    let [name, setName] = useState("Patrick Jones")
+    let [email, setEmail] = useState("aaa@gmail.com")
+    let [password, setPassword] = useState("password")
+    let [passwordConfirmation, setPasswordConfirmation] = useState("password")
+
+    let dispatch = useDispatch();
+    let auth = useSelector(selectAuth);
     
     const handleSubmit = async event => {
         event.preventDefault()
-        // send 
         try {
-            let { jwt: token } = await fetch('http://localhost:4000/api/v1/signup', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    user: { 
-                        name, 
-                        email, 
-                        password, 
-                        password_confirmation: passwordConfirmation }
-                    })
-                }
-            )
-            .then(resp => resp.json()) 
-            
-            // 
-            console.log(token)
+            let user = {
+                name,
+                email,
+                password,
+                password_confirmation: passwordConfirmation
+            };
+
+            dispatch(signUp(user))
         } catch (error) {
-            console.error(error)
+            console.log("error", error)
         }
     }
 

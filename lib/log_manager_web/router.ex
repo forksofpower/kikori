@@ -12,7 +12,8 @@ defmodule LogManagerWeb.Router do
   end
 
   pipeline :api do
-    plug CORSPlug, origin: ["http://localhost:3000", "http//localhost:4000"]
+    plug CORSPlug, origin: ["http://localhost:3000", "http//localhost:4000"], headers: ["Authorization", "Content-Type", "Accept", "Origin", "User-Agent", "DNT","Cache-Control", "X-Mx-ReqToken", "Keep-Alive", "X-Requested-With", "If-Modified-Since", "Bearer", "X-File-Name"]
+    # plug CORSPlug, origin: &__MODULE__.cors_preflight/0, max_age: 86400,
     plug :accepts, ["json"]
   end
 
@@ -41,7 +42,10 @@ defmodule LogManagerWeb.Router do
     resources "/users", UserController, only: [:index, :show]
     resources "/projects", ProjectController, except: [:new, :edit] do
       resources "/logs", LogMessageController, only: [:create, :index, :show]
+      options "/logs", LogMessageController, :options
     end
+    options "/projects", ProjectController, :options
+
     resources "/logs", LogMessageController, except: [:new, :edit]
     get "/me", UserController, :show
   end
