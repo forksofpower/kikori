@@ -28,12 +28,12 @@ config :log_manager, LogManager.Repo,
   password: "postgres",
   database: "log_manager_dev",
   hostname: "localhost",
-  # show_sensitive_data_on_connection_error: true,
+  show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
 config :log_manager, LogManagerWeb.Endpoint,
   http: [
-    port: String.to_integer(System.get_env("PORT") || "4000"),
+    port: "4000",
     transport_options: [socket_opts: [:inet6]]
   ],
   secret_key_base: secret_key_base

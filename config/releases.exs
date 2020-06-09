@@ -8,7 +8,8 @@ db_password = System.get_env("DB_PASSWORD")
 db_host = System.get_env("DB_HOST")
 
 config :log_manager, LogManager.Endpoint,
-  http: [:inet6, port: String.to_integer(app_port)],
+  server: true,
+  http: [:inet6, port:  4000],
   secret_key_base: secret_key_base
 
 config :log_manager,
@@ -18,9 +19,9 @@ config :log_manager,
   app_hostname: app_hostname
 
 # Configure your database
-config :demo, LogManager.Repo,
-  username: db_user,
-  password: db_password,
-  database: "log_manager_prod",
-  hostname: db_host,
-  pool_size: 10
+# config :log_manager, LogManager.Repo,
+#   username: db_user,
+#   password: db_password,
+#   database: "log_manager_prod",
+#   hostname: db_host,
+#   pool_size: 10
