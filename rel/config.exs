@@ -38,7 +38,7 @@ environment :prod do
   set include_erts: true
   set include_src: false
   set cookie: :"]~enlGbLL2z_DVkjpyFgSkP9mv`KN5bFKF&hIQ_r}@5B5VE_5wS@7GR(?(n4WHv?"
-  set vm_args: "rel/vm.args"
+  set vm_args: "rel/vm.args.eex"
   set pre_configure_hooks: "rel/hooks/pre_configure.d"
 end
 
@@ -47,8 +47,8 @@ end
 # when running `mix distillery.release`, the first release in the file
 # will be used by default
 
-release :cluster_demo do
-  set version: current_version(:cluster_demo)
+release :log_manager do
+  set version: current_version(:log_manager)
   set applications: [
     :runtime_tools
   ]

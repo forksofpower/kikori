@@ -6,7 +6,7 @@ FROM elixir:1.8.2-alpine AS builder
 
 # The following are build arguments used to change variable parts of the image.
 # The name of your application/release (required)
-ARG APP_NAME=kikori
+ARG APP_NAME=log_manager
 # The version of the application we are building (required)
 ARG APP_VSN=0.1.0
 # The environment to build with
@@ -48,9 +48,9 @@ RUN mix do deps.get, deps.compile, compile
 RUN if [ ! "$SKIP_PHOENIX" = "true" ]; then \
   cd ${PHOENIX_SUBDIR}/assets && \
   yarn install && \
-  yarn deploy && \
-  cd - && \
-  mix phx.digest; \
+  yarn run build && \
+  cd -; \
+  # mix phx.digest; \
 fi
 
 RUN \
@@ -65,7 +65,7 @@ RUN \
 FROM alpine:${ALPINE_VERSION}
 
 # The name of your application/release (required)
-ARG APP_NAME=kikori
+ARG APP_NAME=log_manager
 
 RUN apk update && \
     apk add --no-cache \
