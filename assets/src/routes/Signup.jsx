@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 
 import { useSelector, useDispatch } from 'react-redux';
-import { signUp, selectAuth } from '../services/auth.slice';
+import { signUp, selectAuth } from '../store/auth.slice';
 
 const Signup = () => {
     let [name, setName] = useState("Patrick Jones")

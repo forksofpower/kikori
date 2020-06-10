@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectAuth, selectCurrentUser } from '../services/auth.slice'
+import { selectAuth, selectCurrentUser } from '../store/auth.slice'
 import { isEmpty } from '../helpers'
 
 const PrivateRoute = ({children, ...remainingProps}) => {

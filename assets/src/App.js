@@ -6,14 +6,15 @@ import {
   selectCurrentUser,
   getCurrentUser,
   loadingComplete
-} from './services/auth.slice';
+} from './store/auth.slice';
 import { isEmpty } from './helpers'
 
 import { 
   Route, 
   BrowserRouter as Router, 
   Switch,
-  Redirect
+  Redirect,
+  useLocation
 } from 'react-router-dom';
 
 // routes
@@ -23,15 +24,17 @@ import Home from './routes/Home'
 import Login from './routes/Login'
 import Console from './routes/Console'
 import Projects from './routes/Projects'
+import Project from './Components/Projects/Project'
 import Signup from './routes/Signup';
 
 // styles
 import './App.css';
 
 const App = () => {
+  // const { pathname } = useLocation();
+  let dispatch = useDispatch()
   let user = useSelector(selectCurrentUser)
   let isAuthLoaded = useSelector(selectIsLoaded)
-  let dispatch = useDispatch()
 
   useEffect(() => {
     // check of currentUser
@@ -56,8 +59,12 @@ const App = () => {
     : (
         <Router>
         <Switch>
+          {/* <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} /> */}
           <Route exact path="/" component={Home} />
           <Route path="/console" component={Console} />
+          <PrivateRoute path="/projects/:id">
+            <Project />
+          </PrivateRoute>
           <PrivateRoute path="/projects">
             <Projects />
           </PrivateRoute>
