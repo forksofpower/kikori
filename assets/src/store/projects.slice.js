@@ -29,9 +29,28 @@ export const fetchProjects = createAsyncThunk(
     }
 );
 
+export const createProject = createAsyncThunk(
+    'projects/createProject',
+    async (project) => {
+        let token = localStorage.getItem('token');
+        let payload = { project }
+        const data = await fetch(URL, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(resp => resp.json())
+
+        return data
+    })
+
 export const projectSlice = createSlice({
     name: 'projects',
-    initialState: projectsAdapter.getInitialState({ loading: false}),
+    initialState: projectsAdapter.getInitialState({ isLoaded: false}),
     reducers: {
         addProject: (state, action) => {
             state.projects.data.push(action.payload)
@@ -52,6 +71,10 @@ export const projectSlice = createSlice({
             if (!state.isLoaded) {
                 state.isLoaded = true
             }
+        },
+        [createProject.fulfilled]: (state, action) => {
+            // insert project into projects
+            projectsAdapter.upsertOne(state, action.payload.project);
         }
     }
 })
@@ -72,30 +95,30 @@ export const {
 } = projectSlice.actions;
 
 // thunks
-export const createProject = (project) => dispatch => {
-    let token = localStorage.getItem('token');
-    if (token) {
-        fetch(URL, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify(project)
-        })
-        .then(resp => resp.json())
-        .then(({data}) => {
-            if (data.error) {
-                console.log('something went wrong')
-            } else {
-                dispatch(addProject(data.project))
-            }
-        })
-    } else {
-        noTokenError('createProject')
-    }
-}
+// export const createProject = (project) => dispatch => {
+//     let token = localStorage.getItem('token');
+//     if (token) {
+//         fetch(URL, {
+//             method: 'POST',
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "Accept": "application/json",
+//                 "Authorization": `Bearer ${token}`
+//             },
+//             body: JSON.stringify(project)
+//         })
+//         .then(resp => resp.json())
+//         .then(({data}) => {
+//             if (data.error) {
+//                 console.log('something went wrong')
+//             } else {
+//                 dispatch(addProject(data.project))
+//             }
+//         })
+//     } else {
+//         noTokenError('createProject')
+//     }
+// }
 
 export const deleteProject = (project) => dispatch => {
     let token = localStorage.getItem('token');
@@ -123,6 +146,7 @@ export const deleteProject = (project) => dispatch => {
 
 // selectors
 // export const selectProjectById = state => state.projects.entities[];
+export const selectProjectsLoaded = state => state.projects.isLoaded;
 
 export default projectSlice.reducer;
 

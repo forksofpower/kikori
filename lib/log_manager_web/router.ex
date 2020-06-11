@@ -49,7 +49,16 @@ defmodule LogManagerWeb.Router do
     resources "/logs", LogMessageController, except: [:new, :edit]
     get "/me", UserController, :show
     options "/me", UserController, :options
+
+    post "/commit", LogMessageController, :create
+    options "/commit", LogMessageContorller, :options
   end
+
+  # scope "/api/v1", LogManagerWeb do
+    # private
+    # authorize with api token & client id
+    # pipe_through :token_authenticated
+  # end
 
 
   # Other scopes may use custom stacks.

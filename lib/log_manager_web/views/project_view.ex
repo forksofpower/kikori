@@ -12,6 +12,8 @@ defmodule LogManagerWeb.ProjectView do
 
   def render("project.json", %{project: project}) do
     %{id: project.id,
-      name: project.name}
+      name: project.name,
+      guid: project.guid
+    }
   end
 end

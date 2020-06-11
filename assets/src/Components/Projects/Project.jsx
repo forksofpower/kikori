@@ -20,11 +20,10 @@ const Project = () => {
     }, [])
 
     useEffect(() => {
-        // is this stupid?
         if (projects.length > 0) {
             setProject(projects.find(x => x.id === projectId))
         }
-    }, [projects]);
+    }, [projects, id]);
     
     return (
 
@@ -35,7 +34,6 @@ const Project = () => {
                     <Grid.Column floated='left' width={2}>
                         <ProjectListSidebar projects={projects} currentProject={project}/>
                     </Grid.Column>
-                
                 </Grid>   
             </div>
     )
