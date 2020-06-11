@@ -3,15 +3,17 @@ defmodule LogManagerWeb.ProjectView do
   alias LogManagerWeb.ProjectView
 
   def render("index.json", %{projects: projects}) do
-    %{data: render_many(projects, ProjectView, "project.json")}
+    %{projects: render_many(projects, ProjectView, "project.json")}
   end
 
   def render("show.json", %{project: project}) do
-    %{data: render_one(project, ProjectView, "project.json")}
+    %{project: render_one(project, ProjectView, "project.json")}
   end
 
   def render("project.json", %{project: project}) do
     %{id: project.id,
-      name: project.name}
+      name: project.name,
+      guid: project.guid
+    }
   end
 end
