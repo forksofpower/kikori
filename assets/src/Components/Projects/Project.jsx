@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectProjectById, selectAllProjects, fetchProjects } from '../../store/projects.slice';
 import { useState } from 'react';
 
+import { Grid } from "semantic-ui-react";
 import ProjectListSidebar from "../Projects/ProjectListSidebar";
 
 const Project = () => {
@@ -30,9 +31,12 @@ const Project = () => {
         projects && 
         // currentProject &&
             <div>
-                <ProjectListSidebar projects={projects} currentProject={project}/>
-                {project.name}
-                {/* <p>Single project page: {currentProject.name}</p> */}
+                <Grid>
+                    <Grid.Column floated='left' width={2}>
+                        <ProjectListSidebar projects={projects} currentProject={project}/>
+                    </Grid.Column>
+                
+                </Grid>   
             </div>
     )
 }
