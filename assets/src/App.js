@@ -36,8 +36,9 @@ const App = () => {
   let user = useSelector(selectCurrentUser)
   let isAuthLoaded = useSelector(selectIsLoaded)
 
+
   useEffect(() => {
-    // check of currentUser
+    // check currentUser
     // if no user, use token to fetch /me
     if ( isEmpty(user) ) {
       let token = localStorage.getItem('token')

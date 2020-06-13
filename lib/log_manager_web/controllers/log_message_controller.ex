@@ -3,6 +3,8 @@ defmodule LogManagerWeb.LogMessageController do
   require Logger
   require IEx
 
+  # import LogManagerWeb.Endpoint, only: [broadcast!: 3]
+  alias LogManagerWeb.Endpoint
   alias LogManager.{Guardian, Projects, Projects.LogMessage}
   alias LogManager.Projects
   alias LogManager.Projects.LogMessage
@@ -24,12 +26,21 @@ defmodule LogManagerWeb.LogMessageController do
 
   def create(conn, %{"log_message" => log_message_params, "project_id" => id}) do
     {project_id, ""} = Integer.parse(id)
-    log_message_params = Map.put(log_message_params, "project_id", project_id)
-    with {:ok, %LogMessage{} = log_message} <- Projects.create_log_message(log_message_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.log_message_path(conn, :show, log_message))
-      |> render("show.json", log_message: log_message)
+    # message_string = "This is a test"
+    message_string = Jason.encode!(log_message_params)
+
+    # IO.puts(inspect(message_string))
+
+    log = %{message: message_string, project_id: project_id}
+
+    with {:ok, %LogMessage{} = log_message} <- Projects.create_log_message(log) do
+        # Notify any connected clients
+        Endpoint.broadcast!("project:" <> id, "create_log", %{message: log_message.message})
+        # IO.puts(inspect(log_message))
+        conn
+        |> put_status(:created)
+        |> put_resp_header("location", Routes.log_message_path(conn, :show, log_message))
+        |> render("show.json", log_message: log_message)
     end
   end
 
@@ -38,6 +49,7 @@ defmodule LogManagerWeb.LogMessageController do
     render(conn, "show.json", log_message: log_message)
   end
 
+  @spec update(any, map) :: any
   def update(conn, %{"id" => id, "log_message" => log_message_params}) do
     log_message = Projects.get_log_message!(id)
 

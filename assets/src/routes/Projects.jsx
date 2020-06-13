@@ -6,6 +6,7 @@ import {
     selectProjectById,
     selectEntities,
     selectProjectsLoaded,
+    deleteProject,
 } from "../store/projects.slice";
 
 import { Grid, Button, Icon, Segment, Header, Container, Card } from "semantic-ui-react";
@@ -44,20 +45,22 @@ export default Projects
 
 const ProjectsGridContainer = ({projects}) => {
     const history = useHistory();
+    const dispatch = useDispatch();
     return (
     <Card.Group centered>
-        {projects.map(project => (
+        {projects && projects.map(project => (
             <Card key={project.id}>
+                {console.log(project)}
                 <Card.Content>
                     <Card.Header>{project.name}</Card.Header>
-                    <Card.Meta>{project.guid.slice(0, 23)}...</Card.Meta>
+                    <Card.Meta>{project.guid?.slice(0, 23)}...</Card.Meta>
                 </Card.Content>
                 <Card.Content>
                     <div className="ui two buttons">
                         <Button basic color="green" onClick={() => history.push(`/projects/${project.id}`)}>
                             View Logs
                         </Button>
-                        <Button basic color='red'>
+                        <Button basic color='red' onClick={() => dispatch(deleteProject(project))}>
                             Delete
                         </Button>
                     </div>
