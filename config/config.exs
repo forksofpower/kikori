@@ -13,7 +13,7 @@ config :log_manager,
 # Configures the endpoint
 config :log_manager, LogManagerWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "xExu0d2Eky4Z/j1JQ4AzyoVUz3ZQisjq5KwGYPaMVrfxlx4Jj8vndlWbVUUBXqaa",
+  secret_key_base: "whBTKkImubRyrK+FsJSgmiJjWiDBqit+4vlJqeYvEKnhQPI5BPUTI9J49yxI6//0",
   render_errors: [view: LogManagerWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: LogManager.PubSub,
   live_view: [signing_salt: "dS4eNi7k"]

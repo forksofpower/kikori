@@ -12,7 +12,11 @@ defmodule LogManagerWeb.ProjectController do
   end
 
   def create(conn, %{"project" => project_params}) do
-    with {:ok, %Project{} = project} <- Projects.create_project(project_params) do
+    user = Guardian.Plug.current_resource(conn)
+    p = project_params |> Map.merge(%{"user_id" => user.id})
+
+    with {:ok, %Project{} = project} <- Projects.create_project(p) do
+
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.project_path(conn, :show, project))

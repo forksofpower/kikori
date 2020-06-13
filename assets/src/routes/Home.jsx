@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { selectCurrentUser } from '../services/auth.slice'
+import { selectCurrentUser } from '../store/auth.slice'
 import { isEmpty } from '../helpers'
 
 const Home = () => {

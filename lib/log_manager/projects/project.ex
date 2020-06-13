@@ -7,6 +7,7 @@ defmodule LogManager.Projects.Project do
 
   schema "projects" do
     field :name, :string
+    field :guid, :binary_id, read_after_writes: true
     belongs_to(:user, User, foreign_key: :user_id)
 
     has_many :log_messages, LogMessage
@@ -17,7 +18,7 @@ defmodule LogManager.Projects.Project do
   @doc false
   def changeset(project, attrs) do
     project
-    |> cast(attrs, [:name, :user_id])
+    |> cast(attrs, [:name, :user_id, :guid])
     # |> cast_assoc(:user, required: true)
     |> validate_required([:name])
   end

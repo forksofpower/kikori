@@ -10,7 +10,9 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :log_manager, LogManagerWeb.Endpoint,
-  url: [host: "example.com", port: 80],
+  server: true,
+  load_from_system_env: true,
+  url: [host: Application.get_env(:log_manager, :app_hostname), port: Application.get_env(:log_manager, :app_port)],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
