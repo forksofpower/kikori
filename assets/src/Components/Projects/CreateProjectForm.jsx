@@ -5,7 +5,7 @@ import { Form } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 
 const CreateProjectForm = () => {
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit } = useForm();
     const dispatch = useDispatch();    
     const onSubmit = data => dispatch(createProject(data))
 

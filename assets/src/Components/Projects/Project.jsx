@@ -6,13 +6,17 @@ import { useState } from 'react';
 
 import { Grid } from "semantic-ui-react";
 import ProjectListSidebar from "../Projects/ProjectListSidebar";
+import LogsContainer from '../Logs/LogsContainer';
+import { isEmpty } from '../../helpers';
 
 const Project = () => {
     let dispatch = useDispatch();
     let [project, setProject] = useState({})
+
     let { id } = useParams();
-    let projectId = Number(id);
     let projects = useSelector(selectAllProjects)
+
+    const [shouldRerender, setShouldRerender] = useState(false);
 
     useEffect(() => {
         // load projects
@@ -21,9 +25,16 @@ const Project = () => {
 
     useEffect(() => {
         if (projects.length > 0) {
+            let projectId = Number(id);
             setProject(projects.find(x => x.id === projectId))
+            console.log("Rendering...")
+            // setShouldRerender(true)
         }
     }, [projects, id]);
+
+    useEffect(() => {
+        // 
+    }, [project])
     
     return (
 
@@ -31,8 +42,21 @@ const Project = () => {
         // currentProject &&
             <div>
                 <Grid>
-                    <Grid.Column floated='left' width={2}>
-                        <ProjectListSidebar projects={projects} currentProject={project}/>
+                    <Grid.Column floated='left' width={4}>
+                        <ProjectListSidebar 
+                            projects={projects} 
+                            currentProject={project}
+                            setProject={setProject}
+                        />
+                    </Grid.Column>
+                    <Grid.Column width={12}>
+                        {isEmpty(project) 
+                            ? <h1>Loading...</h1>
+                            : <LogsContainer 
+                                project={project} 
+                                rerender={shouldRerender}
+                            />
+                        }
                     </Grid.Column>
                 </Grid>   
             </div>

@@ -51,7 +51,7 @@ defmodule LogManagerWeb.Router do
     options "/me", UserController, :options
 
     post "/commit", LogMessageController, :create
-    options "/commit", LogMessageContorller, :options
+    options "/commit", LogMessageController, :options
   end
 
   # scope "/api/v1", LogManagerWeb do

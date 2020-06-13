@@ -1,15 +1,16 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from "@reduxjs/toolkit";
 import { normalize, schema } from "normalizr";
-
+import { isEmpty } from "../helpers";
 
 // const URL = 'https://en33spkgpultt.x.pipedream.net/projects';
-const URL = 'http://localhost:4000/api/v1/projects'
+const URL = 'http://localhost:3000/api/v1/projects'
 
 
 export const projectEntity = new schema.Entity('projects');
 
 const projectsAdapter = createEntityAdapter();
 
+// thunks
 export const fetchProjects = createAsyncThunk(
     'projects/fetchProjects',
     async () => {
@@ -23,7 +24,7 @@ export const fetchProjects = createAsyncThunk(
             }
         })
         .then(resp => resp.json())
-
+        
         const normalized = normalize(data.projects, [projectEntity])
         return normalized.entities
     }
@@ -48,6 +49,27 @@ export const createProject = createAsyncThunk(
         return data
     })
 
+export const deleteProject = createAsyncThunk(
+    'projects/deleteProject',
+    async (project) => {
+
+        // console.log("DELETING: ", project)
+        let token = localStorage.getItem('token');
+        let deleted = await fetch(`${URL}/${project.id}`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            console.log(deleted)
+            return project;
+        })
+    })
+
 export const projectSlice = createSlice({
     name: 'projects',
     initialState: projectsAdapter.getInitialState({ isLoaded: false}),
@@ -67,7 +89,9 @@ export const projectSlice = createSlice({
     }, extraReducers: {
         [fetchProjects.fulfilled]: (state, action) => {
             // insert projects into state
-            projectsAdapter.upsertMany(state, action.payload.projects)
+            if (!isEmpty(action.payload)) {
+                projectsAdapter.upsertMany(state, action.payload.projects)
+            }
             if (!state.isLoaded) {
                 state.isLoaded = true
             }
@@ -75,6 +99,9 @@ export const projectSlice = createSlice({
         [createProject.fulfilled]: (state, action) => {
             // insert project into projects
             projectsAdapter.upsertOne(state, action.payload.project);
+        },
+        [deleteProject.fulfilled]: (state, action) => {
+            projectsAdapter.removeOne(state, action.payload.id)
         }
     }
 })
@@ -94,55 +121,6 @@ export const {
     removeProject
 } = projectSlice.actions;
 
-// thunks
-// export const createProject = (project) => dispatch => {
-//     let token = localStorage.getItem('token');
-//     if (token) {
-//         fetch(URL, {
-//             method: 'POST',
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 "Accept": "application/json",
-//                 "Authorization": `Bearer ${token}`
-//             },
-//             body: JSON.stringify(project)
-//         })
-//         .then(resp => resp.json())
-//         .then(({data}) => {
-//             if (data.error) {
-//                 console.log('something went wrong')
-//             } else {
-//                 dispatch(addProject(data.project))
-//             }
-//         })
-//     } else {
-//         noTokenError('createProject')
-//     }
-// }
-
-export const deleteProject = (project) => dispatch => {
-    let token = localStorage.getItem('token');
-    if (token) {
-        fetch(`${URL}/${project.id}`, {
-            method: 'DELETE',
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        })
-        .then(resp => resp.json())
-        .then(({data}) => {
-            if (data.error) {
-                console.log('something went wrong')
-            } else {
-                dispatch(removeProject(project.id))
-            }
-        })
-    } else {
-        noTokenError('deleteProject')
-    }
-}
 
 // selectors
 // export const selectProjectById = state => state.projects.entities[];

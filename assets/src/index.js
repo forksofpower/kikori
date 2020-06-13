@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import store from './store';
 import { Provider } from 'react-redux';
+import { UserSocketProvider } from "./store/UserSocketContext";
 import * as serviceWorker from './serviceWorker';
 
 import 'semantic-ui-css/semantic.min.css'
@@ -11,7 +12,9 @@ import 'semantic-ui-css/semantic.min.css'
 ReactDOM.render(
   // <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <UserSocketProvider>
+        <App />
+      </UserSocketProvider>
     </Provider>,
   // </React.StrictMode>,
   document.getElementById('root')

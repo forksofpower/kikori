@@ -5,7 +5,8 @@ defmodule LogManager.Repo.Migrations.CreateLogMessages do
     create table(:log_messages) do
       add :type, :string
       add :request_data, :text
-      add :data, :text
+      add :message, :text
+      add :level, :string
       add :project_id, references(:projects, on_delete: :nothing)
 
       timestamps()
