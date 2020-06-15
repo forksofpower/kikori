@@ -70,6 +70,7 @@ services:
 networks:
   postgres_net:
   web_net:
+    driver: overlay
 
 secrets:
   postgres_password:
