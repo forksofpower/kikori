@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
     deploy:
-      replicas: 1
+      replicas: 4
       # mode: global
 
   # one Nginx container per node
