@@ -41,6 +41,9 @@ RUN apk update && \
 COPY . .
 
 RUN mix do deps.get, deps.compile, compile
+# RUN mix ecto.drop && \
+#     mix ecto.create && \
+#     mix ecto.migrate
 
 # This step builds assets for the Phoenix app (if there is one)
 # If you aren't building a Phoenix app, pass `--build-arg SKIP_PHOENIX=true`

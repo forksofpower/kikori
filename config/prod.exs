@@ -10,6 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :log_manager, LogManagerWeb.Endpoint,
+  url: [host: "db"],
   server: true,
   load_from_system_env: true,
   url: [host: Application.get_env(:log_manager, :app_hostname), port: Application.get_env(:log_manager, :app_port)],
