@@ -32,9 +32,9 @@ const Project = () => {
         }
     }, [projects, id]);
 
-    useEffect(() => {
-        // 
-    }, [project])
+    // useEffect(() => {
+    //     // 
+    // }, [project])
     
     return (
 
