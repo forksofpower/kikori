@@ -14,9 +14,6 @@ const LogsContainer = ({project, rerender}) => {
     const NEW_LOG_MESSAGE = 'create_log';
 
     useEffect(() => {
-        // console.log("project in logsContainer: ", project)
-        console.log(projectChannel)
-        console.log(project)
         if(!projectChannel) return;
 
         // console.log(projectChannel)

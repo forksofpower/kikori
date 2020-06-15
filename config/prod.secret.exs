@@ -26,8 +26,8 @@ secret_key_base = "whBTKkImubRyrK+FsJSgmiJjWiDBqit+4vlJqeYvEKnhQPI5BPUTI9J49yxI6
 config :log_manager, LogManager.Repo,
   username: "postgres",
   password: "postgres",
-  database: "log_manager_dev",
-  hostname: "localhost",
+  database: "kikori_db",
+  hostname: "db",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
@@ -43,7 +43,7 @@ config :log_manager, LogManagerWeb.Endpoint,
 # If you are doing OTP releases, you need to instruct Phoenix
 # to start each relevant endpoint:
 #
-#     config :log_manager, LogManagerWeb.Endpoint, server: true
+config :log_manager, LogManagerWeb.Endpoint, server: true
 #
 # Then you can assemble a release by calling `mix release`.
 # See `mix help release` for more information.

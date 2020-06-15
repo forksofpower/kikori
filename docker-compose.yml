@@ -1,44 +1,76 @@
-# Version of docker-compose
-version: '3'
+version: '3.7'
 
-# Containers we are going to run
 services:
-  # Our Phoenix container
-  phoenix:
-    # The build parameters for this container.
-    build:
-      # Here we define that it should build from the current directory
-      context: .
+  web:
+    image: forksofpower/kikori:latest
     environment:
       SECRET_KEY_BASE: whBTKkImubRyrK+FsJSgmiJjWiDBqit+4vlJqeYvEKnhQPI5BPUTI9J49yxI6//0
-      # Variables to connect to our Postgres server
-      DATABASE_URL: ecto://postgres:postgres@localhost:5432/log_manager
+      DATABASE_URL: ecto://postgres:postgres@db:5432/kikori
       PGUSER: postgres
       PGPASSWORD: postgres
-      PGDATABASE: log_manager
+      PGDATABASE: kikori_db
       PGPORT: 5432
-      # Hostname of our Postgres container
       PGHOST: db
+    secrets:
+      - postgres_password
     ports:
-      # Mapping the port to make the Phoenix app accessible outside of the container
-      - "4000:4000"
+      - 4000:4000
+    networks:
+      - web_net
+      - postgres_net
     depends_on:
-      # The db container needs to be started before we start this container
       - db
     deploy:
-      replicas: 2
+      replicas: 1
+      # mode: global
+
+  # one Nginx container per node
+  nginx:
+    image: nginx:latest
+    # container_name: kikori_nginx
+    deploy:
+      mode: global
+    volumes:
+      - ./deploy/nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    networks: 
+      - web_net
+  
+  # Run a single beefy instance of postgres
   db:
-    # We use the predefined Postgres image
     image: postgres:12
+    secrets:
+      - postgres_password
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      # resources:
+      #   reservations:
+      #     memory: 128M
+      #   limits:
+      #     memory: 256M
+    ports:
+      - 5432:5432
+    networks:
+      - postgres_net
     environment:
-      # Set user/password for Postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      # Set a path where Postgres should store the data
-      PGDATA: /var/lib/postgresql/data/pgdata
-    restart: always
+      POSTGRES_DB: 'kikori_db'
     volumes:
-      - pgdata:/var/lib/postgresql/data
-# Define the volumes
-volumes:
-  pgdata:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - type: bind
+        source: /home/patrick/docker/volumes/postgres
+        target: /var/lib/postgresql/data
+    depends_on: 
+      - web
+
+networks:
+  postgres_net:
+  web_net:
+
+secrets:
+  postgres_password:
+    external: true
