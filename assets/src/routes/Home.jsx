@@ -1,18 +1,33 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { selectCurrentUser } from '../store/auth.slice'
-import { isEmpty } from '../helpers'
+import React from "react";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../store/auth.slice";
+import { isEmpty } from "../helpers";
+import { Button } from "semantic-ui-react";
+import { NavLink, useHistory } from "react-router-dom";
 
 const Home = () => {
-    let currentUser = useSelector(selectCurrentUser);
-    return (
-        <div>
-            {!isEmpty(currentUser)
-                ? <h1>Welcome Home, {currentUser.name}!</h1>
-                : <h1>Home!</h1>
-            }
-        </div>
-    )
-}
+  let currentUser = useSelector(selectCurrentUser);
+  const { push } = useHistory();
 
-export default Home
+  return (
+    <div>
+      {!isEmpty(currentUser) ? (
+        <div>
+          <h1>Welcome Home, {currentUser.name}!</h1>
+          <Button basic color="red" onClick={() => push("/signout")}>
+            Signout
+          </Button>
+        </div>
+      ) : (
+        <div>
+          <h1>Home!</h1>
+          <Button color="blue" onClick={() => push("/login")}>
+            Sign In
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Home;

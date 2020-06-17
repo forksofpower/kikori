@@ -7,7 +7,8 @@ defmodule LogManagerWeb.ProjectController do
   action_fallback LogManagerWeb.FallbackController
 
   def index(conn, _params) do
-    projects = Projects.list_projects()
+    %{id: userId } = Guardian.Plug.current_resource(conn)
+    %{projects: projects} = Projects.user_projects(userId)
     render(conn, "index.json", projects: projects)
   end
 

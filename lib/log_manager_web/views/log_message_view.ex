@@ -11,9 +11,12 @@ defmodule LogManagerWeb.LogMessageView do
   end
 
   def render("log_message.json", %{log_message: log_message}) do
-    %{id: log_message.id,
+    %{
+      id: log_message.id,
       type: log_message.type,
-      request_data: log_message.request_data,
-      message: log_message.message}
+      message: log_message.message,
+      project_id: log_message.project_id,
+      inserted_at: log_message.inserted_at
+    }
   end
 end

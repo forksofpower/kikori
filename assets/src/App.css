@@ -37,3 +37,12 @@
     transform: translateY(0px)
   }
 }
+
+.log-message {
+  font-size: 12.5px;
+  line-height: 18px;
+  font-weight: 400;
+}
+.log-message:hover {
+  background-color: rgb(232, 235, 240)ddd;
+}
