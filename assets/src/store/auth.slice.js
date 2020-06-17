@@ -11,13 +11,16 @@ export const authSlice = createSlice({
         login: (state, action) => {
             state.currentUser = action.payload
         },
+        signOut: state => {
+            state.currentUser = {}
+        },
         loadingComplete: (state) => {
             state.isLoaded = true
         },
     }
 })
 
-export const { login, loadingComplete } = authSlice.actions;
+export const { login, signOut, loadingComplete } = authSlice.actions;
 
 export const signUp = user => dispatch => {
     return fetch('http://localhost:4000/api/v1/signup', {
@@ -41,6 +44,28 @@ export const signUp = user => dispatch => {
     })
 }
 
+export const signin = user => dispatch => {
+    return fetch('http://localhost:4000/api/v1/signin', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(user)
+    })
+    .then(resp => resp.json())
+    .then(({ jwt, error }) => {
+        if (error) {
+            // deal with errors
+        } else {
+            // save token to localstorage
+            localStorage.setItem("token", jwt)
+            // login user
+            dispatch(getCurrentUser())
+        }
+    })
+}
+
 export const getCurrentUser = () => dispatch => {
     let token = localStorage.getItem('token');
     return fetch('http://localhost:4000/api/v1/me', {
@@ -53,6 +78,7 @@ export const getCurrentUser = () => dispatch => {
     })
     .then(resp => resp.json())
     .then(({data}) => {
+        // console.log(resp)
         if (data.error) {
             // deal with errors
             console.log('something went wrong...')

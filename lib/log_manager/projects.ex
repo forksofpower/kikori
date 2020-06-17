@@ -6,6 +6,7 @@ defmodule LogManager.Projects do
   import Ecto.Query, warn: false
   alias LogManager.Repo
 
+  alias LogManager.Accounts.{User}
   alias LogManager.Projects.{Project,LogMessage}
 
   @doc """
@@ -19,6 +20,10 @@ defmodule LogManager.Projects do
   """
   def list_projects do
     Repo.all from p in Project, preload: [:user]
+  end
+
+  def user_projects(id) do
+    Repo.get!(User, id) |> Repo.preload(:projects)
   end
 
   @doc """

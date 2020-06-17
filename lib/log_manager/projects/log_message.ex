@@ -4,11 +4,12 @@ defmodule LogManager.Projects.LogMessage do
 
   alias LogManager.Projects.Project
 
+  @derive {Jason.Encoder, only: [:id, :type, :request_data, :message, :project_id, :level, :inserted_at]}
   schema "log_messages" do
     field :message, :string
     field :request_data, :string
     field :level, :string
-    field :type, :string
+    field :type, :string, default: "default"
     belongs_to(:project, Project, foreign_key: :project_id)
 
     timestamps()

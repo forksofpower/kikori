@@ -29,6 +29,7 @@ import Signup from './routes/Signup';
 
 // styles
 import './App.css';
+import Signout from './routes/Signout';
 
 const App = () => {
   // const { pathname } = useLocation();
@@ -75,6 +76,9 @@ const App = () => {
           <PublicRoute path="/signup">
             <Signup />
           </PublicRoute>
+          <PrivateRoute path="/signout">
+            <Signout />
+          </PrivateRoute>
         </Switch>
         </Router>
       );

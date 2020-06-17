@@ -35,7 +35,7 @@ defmodule LogManagerWeb.LogMessageController do
 
     with {:ok, %LogMessage{} = log_message} <- Projects.create_log_message(log) do
         # Notify any connected clients
-        Endpoint.broadcast!("project:" <> id, "create_log", %{message: log_message.message})
+        Endpoint.broadcast!("project:" <> id, "create_log", %{log_message: log_message})
         # IO.puts(inspect(log_message))
         conn
         |> put_status(:created)
