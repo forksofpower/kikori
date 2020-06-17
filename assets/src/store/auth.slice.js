@@ -11,13 +11,16 @@ export const authSlice = createSlice({
         login: (state, action) => {
             state.currentUser = action.payload
         },
+        signOut: state => {
+            state.currentUser = {}
+        },
         loadingComplete: (state) => {
             state.isLoaded = true
         },
     }
 })
 
-export const { login, loadingComplete } = authSlice.actions;
+export const { login, signOut, loadingComplete } = authSlice.actions;
 
 export const signUp = user => dispatch => {
     return fetch('http://localhost:4000/api/v1/signup', {

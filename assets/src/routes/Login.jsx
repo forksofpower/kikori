@@ -14,16 +14,17 @@ import { signin } from "../store/auth.slice";
 // import { Form } from 'semantic-ui-react';
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const onSubmit = () => {
-    dispatch(signin({ email, password }))
-  }
+    dispatch(signin({ email, password }));
+  };
 
   // const onSubmit = data => dispatch(login(data))
 
@@ -34,26 +35,30 @@ const Login = () => {
           Log-in to your account
         </Header>
         <Form size="large" onSubmit={handleSubmit(onSubmit)}>
-          <Segment stacked color="purple">
+          <Segment stacked>
             <Form.Field>
               {/* <label>Email</label> */}
-              <Form.Input 
-                name="email" 
-                placeholder='E-mail address' 
-                fluid icon='at' iconPosition='left'
-                onChange={(e) => setEmail(e.target.value)} />
+              <Form.Input
+                name="email"
+                placeholder="E-mail address"
+                fluid
+                icon="at"
+                iconPosition="left"
+                onChange={(e) => setEmail(e.target.value)}
+              />
               {/* <input type="email" name="email" ref={register} /> */}
             </Form.Field>
             <Form.Field>
               {/* <label>Password</label> */}
               <Form.Input
                 fluid
-                icon='lock'
-                iconPosition='left'
-                placeholder='Password'
-                type='password'
+                icon="lock"
+                iconPosition="left"
+                placeholder="Password"
+                type="password"
                 name="password"
-                onChange={(e) => setPassword(e.target.value)} />
+                onChange={(e) => setPassword(e.target.value)}
+              />
               {/* <input type="password" name="password" ref={register} /> */}
             </Form.Field>
             <br />
@@ -63,7 +68,7 @@ const Login = () => {
           </Segment>
         </Form>
         <Message>
-          Don't have an account? <a href="#">Sign Up</a>
+          Don't have an account? <Link to="/signup">Sign Up</Link>
         </Message>
       </Grid.Column>
     </Grid>

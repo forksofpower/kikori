@@ -1,24 +1,18 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useHistory } from 'react-router-dom'
+import { Button } from 'semantic-ui-react';
 
 const ProjectListSidebar = ({projects, currentProject, setProject}) => {
     // console.log(currentProject)
+    let { push } = useHistory();
+
     return (
         <div>{
             projects &&     
-                projects.map(project => 
-                    <NavLink 
-                        to={`/projects/${project.id}`}
-                        isActive={() => currentProject.id === project.id}
-                        activeStyle={{color: 'red'}}
-                        key={project.id}
-                        onClick={(e) => {
-                            // e.preventDefault();
-                            setProject(project)
-                        }}
-                    >
+                projects.map(project =>
+                    <Button basic key={project.id} onClick={() => push(`/projects/${project.id}`)}>
                         <h4>{project.name}</h4>
-                    </NavLink>
+                    </Button>
                 )
         }</div>
     )

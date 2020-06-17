@@ -20,9 +20,7 @@ import { selectIsLoaded } from '../store/auth.slice';
 const Projects = () => {
     // let { id } = useParams();
     const dispatch = useDispatch();
-
     const projects = useSelector(selectAllProjects)
-
     const projectsLoaded = useSelector(selectProjectsLoaded);
 
     useEffect(() => {
