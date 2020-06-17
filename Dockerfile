@@ -53,7 +53,7 @@ RUN if [ ! "$SKIP_PHOENIX" = "true" ]; then \
   yarn install && \
   yarn run build && \
   cd -; \
-  # mix phx.digest; \
+  mix phx.digest; \
 fi
 
 RUN \
