@@ -10,6 +10,8 @@ import {
   Message,
   Segment,
 } from "semantic-ui-react";
+
+import './routes.css'
 import { signin } from "../store/auth.slice";
 // import { Form } from 'semantic-ui-react';
 import { useDispatch } from "react-redux";
@@ -27,13 +29,17 @@ const Login = () => {
   };
 
   return (
-    <Grid textAlign="center" style={{ height: "100vh", backgroundColor: '#a333c8' }} verticalAlign="middle">
+    <Grid textAlign="center" style={{ 
+        height: "100vh", 
+        backgroundImage: 'url("https://www.transparenttextures.com/patterns/cartographer.png")',
+        backgroundImage: 'url("https://www.transparenttextures.com/patterns/cartographer.png"), linear-gradient(315deg, #6e72fc 0%, #ad1deb 74%)'
+      }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as="h2" color="purple" textAlign="center">
+        <Header as="h2" textAlign="center">
           Log in to <code style={{fontFamily: 'monospace'}}>Kik0ri</code>
         </Header>
         <Form size="large" onSubmit={handleSubmit(onSubmit)}>
-          <Segment color="black" stacked>
+          <Segment inverted color="black" stacked>
             <Form.Field>
               <Form.Input
                 name="email"
@@ -62,7 +68,7 @@ const Login = () => {
           </Segment>
         </Form>
         <Message color="black">
-          Don't have an account? <Link to="/signup">Sign Up</Link>
+          Don't have an account? <Link to="/signup" style={{color: '#a333c8'}}>Sign Up</Link>
         </Message>
       </Grid.Column>
     </Grid>

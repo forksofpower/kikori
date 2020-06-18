@@ -34,6 +34,7 @@ const PrivateRoute = ({children, ...remainingProps}) => {
 }
 
 const RouteChoice = (user, loaded, children, location) => {
+    console.log('location', location)
     if (loaded && isEmpty(user)) {
         return (
             <Redirect
