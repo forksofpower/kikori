@@ -16,17 +16,12 @@ const UserSocketProvider = ({children}) => {
         let options = {}
         if (token !== 'undefined') {
             options.params = { token }
-            try {
-                const socket = new Socket('/socket', { params: { token }})
-                socket.connect()
-                setSocket(socket)
-            } catch(error) {
-                console.log(error)
-            }
-            // persist the socket
-            
         }
-    }, [user]);
+        const socket = new Socket('/socket', options)
+        socket.connect()
+        setSocket(socket)
+        // persist the socket
+    }, []);
 
 
     if (!socket) return null;

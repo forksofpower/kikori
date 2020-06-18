@@ -10,9 +10,8 @@ export const projectEntity = new schema.Entity('projects');
 
 const projectsAdapter = createEntityAdapter();
 
-// thunks
 export const fetchProjects = createAsyncThunk(
-    'projects/fetchProjects',
+    'projects/fetchAll',
     async () => {
         let token = localStorage.getItem('token');
         const data = await fetch(URL, {
@@ -29,9 +28,25 @@ export const fetchProjects = createAsyncThunk(
         return normalized.entities
     }
 );
-
+export const fetchOneProject = createAsyncThunk(
+    'projects/fetchOne',
+    async (id) => {
+        let token = localStorage.getItem('token');
+        const data = await fetch(`${URL}/${id}`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        .then(resp => resp.json())
+        
+        return data
+    }
+)
 export const createProject = createAsyncThunk(
-    'projects/createProject',
+    'projects/create',
     async (project) => {
         let token = localStorage.getItem('token');
         let payload = { project }
@@ -50,7 +65,7 @@ export const createProject = createAsyncThunk(
     })
 
 export const deleteProject = createAsyncThunk(
-    'projects/deleteProject',
+    'projects/deleteOne',
     async (project) => {
 
         // console.log("DELETING: ", project)
@@ -97,6 +112,10 @@ export const projectSlice = createSlice({
             }
         },
         [createProject.fulfilled]: (state, action) => {
+            // insert project into projects
+            projectsAdapter.upsertOne(state, action.payload.project);
+        },
+        [fetchOneProject.fulfilled]: (state, action) => {
             // insert project into projects
             projectsAdapter.upsertOne(state, action.payload.project);
         },
