@@ -125,9 +125,13 @@ defmodule LogManager.Projects do
   end
 
   def list_project_log_messages(project_id) do
+    from m in LogMessage,
+      where: m.project_id == ^project_id,
+      select: m
+
     Repo.get(Project, project_id)
       |> Ecto.assoc(:log_messages)
-      |> Repo.all
+      |> Repo.all(limit: 100)
   end
 
   @doc """

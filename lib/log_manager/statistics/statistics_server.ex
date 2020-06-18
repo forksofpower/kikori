@@ -1,43 +1,49 @@
-defmodule LogManager.Statistics do
+defmodule LogManager.Statistics.Server do
   use GenServer
-
+  # import IEx
   alias LogManager.Projects
   alias LogManager.Statistics.State
   # alias LogManager.Repo
 
   def start_link(_) do
-    GenServer.start_link(__MODULE__, %{})
+    GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
+
+  def get(_pid) do
+    GenServer.call(__MODULE__, :get)
+  end
+
+  def increment(pid, amount) do
+    GenServer.call(pid, {:add, amount})
+  end
+
 
   @impl true
   def init(_args) do
     Process.send_after(self(), :started, 0)
-    {:ok, %State{}}
+    {:ok, %{log_message_count: 0}}
   end
 
   @impl true
   def handle_info(:started, %{}) do
-    state = %State{}
+    # state = %State{}
+    # IEx.pry
+    data = Projects.log_message_count_estimate()
 
-    with {:ok, %Postgrex.Result{} = data} <- Projects.log_message_count_estimate() do
-      IO.inspect(data)
+    count = data.rows |> List.flatten |> Enum.at(0) |> Kernel.trunc
+    state = %{log_message_count: count}
+    {:noreply, state}
+  end
 
-      # count = List.flatten data[:rows]
-    end
-    # state = %State{log_message_count: count}
-    # IO.inspect(state)
-    {:noreply, %{}}
+  @impl true
+  def handle_call(:get, _from, state) do
+    {:reply, state}
   end
 
   @impl true
   def handle_call(:pop, _from, [head | tail]) do
     {:reply, head, tail}
   end
-
-  # @impl true
-  # def handle_call(:get, _state) do
-
-  # end
 
   @impl true
   def handle_cast({:push, element}, state) do

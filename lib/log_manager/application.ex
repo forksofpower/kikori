@@ -14,9 +14,9 @@ defmodule LogManager.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: LogManager.PubSub},
       # Start the Endpoint (http/https)
-      LogManagerWeb.Endpoint,
       # Start a worker by calling: LogManager.Worker.start_link(arg)
-      {LogManager.Statistics, %{}}
+      {LogManager.Statistics.Server, %{}},
+      LogManagerWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

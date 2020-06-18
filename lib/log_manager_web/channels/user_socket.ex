@@ -22,6 +22,11 @@ defmodule LogManagerWeb.UserSocket do
     end
   end
 
+  @impl true
+  def connect(_payload, socket, _connection) do
+    {:ok, socket}
+  end
+
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #
   #     def id(socket), do: "user_socket:#{socket.assigns.user_id}"
@@ -39,3 +44,4 @@ defmodule LogManagerWeb.UserSocket do
   channel "statistics:lobby", LogManagerWeb.StatisticsChannel
   channel "project:*", LogManagerWeb.ProjectChannel
 end
+
