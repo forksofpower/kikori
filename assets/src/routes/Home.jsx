@@ -5,6 +5,8 @@ import { isEmpty } from "../helpers";
 import { Button } from "semantic-ui-react";
 import { NavLink, useHistory } from "react-router-dom";
 
+import DelayRender from "../Components/DelayRender";
+
 const Home = () => {
   let currentUser = useSelector(selectCurrentUser);
   const { push } = useHistory();
@@ -22,9 +24,9 @@ const Home = () => {
       ) : (
         <div>
           <h1>Home!</h1>
-          <Button color="blue" onClick={() => push("/login")}>
-            Sign In
-          </Button>
+            <Button color="blue" onClick={() => push("/login")}>
+              Sign In
+            </Button>
         </div>
       )}
     </div>

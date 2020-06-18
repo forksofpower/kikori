@@ -31,9 +31,9 @@ const Projects = () => {
 
     return (
         <Container>
-            {( projects.length > 0 && projectsLoaded)
+            {(projectsLoaded)
                 ? <ProjectsGridContainer projects={projects}/>
-                : <ProjectsEmptyContainer />
+                : <h1>Loading...</h1>
             }
         </Container>
     )
@@ -47,7 +47,7 @@ const ProjectsGridContainer = ({projects}) => {
     return (
     <Card.Group centered>
         {projects && projects.map(project => (
-            <Card key={project.id}>
+            <Card key={project.id} width={8}>
                 <Card.Content>
                     <Card.Header>{project.name}</Card.Header>
                     <Card.Meta>{project.guid?.slice(0, 23)}...</Card.Meta>

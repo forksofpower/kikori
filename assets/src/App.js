@@ -13,8 +13,6 @@ import {
   Route, 
   BrowserRouter as Router, 
   Switch,
-  Redirect,
-  useLocation
 } from 'react-router-dom';
 
 // routes
@@ -41,16 +39,16 @@ const App = () => {
   useEffect(() => {
     // check currentUser
     // if no user, use token to fetch /me
-    if ( isEmpty(user) ) {
-      let token = localStorage.getItem('token')
-      if (token) {
-        // dispatch getCurrentUser
-        dispatch(getCurrentUser())
-      } else {
-        // nothing to do. auth loading done
-        dispatch(loadingComplete())
-      }
-    }
+    // if ( isEmpty(user) ) {
+    //   let token = localStorage.getItem('token')
+    //   if (token) {
+    //     // dispatch getCurrentUser
+    //     dispatch(getCurrentUser())
+    //   } else {
+    //     // nothing to do. auth loading done
+    //     dispatch(loadingComplete())
+    //   }
+    // }
   }, [])
 
   const isLoading = () => !isAuthLoaded;

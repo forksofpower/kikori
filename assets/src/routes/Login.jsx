@@ -33,7 +33,7 @@ const Login = () => {
           Log in to <code style={{fontFamily: 'monospace'}}>Kik0ri</code>
         </Header>
         <Form size="large" onSubmit={handleSubmit(onSubmit)}>
-          <Segment inverted color="black" stacked>
+          <Segment color="black" stacked>
             <Form.Field>
               <Form.Input
                 name="email"
@@ -61,7 +61,7 @@ const Login = () => {
             </Form.Button>
           </Segment>
         </Form>
-        <Message color="black" inverted>
+        <Message color="black">
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </Message>
       </Grid.Column>
