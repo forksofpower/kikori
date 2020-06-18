@@ -29,7 +29,7 @@ const ProjectChannel = ({ project, msgs = [] }) => {
   const moveToBottom = () => {
     ref.current.scrollIntoView({
       behavior: 'smooth',
-      block: 'start'
+      block: 'end'
     })
   }
 
@@ -102,7 +102,11 @@ const ProjectChannel = ({ project, msgs = [] }) => {
         )}
         
         {logsLoaded && log_messages && (
-            <div ref={ref} name="logTail"></div>
+            <div  ref={ref} 
+                  name="logTail"
+                  style={{minHeight: '20px'}}
+            >
+            </div>
         )}
         </>
     </div>

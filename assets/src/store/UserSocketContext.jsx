@@ -12,14 +12,16 @@ const UserSocketProvider = ({children}) => {
     const [socket, setSocket] = useState({});
 
     useEffect(() => {
-        if (!isEmpty(user)) {
-            const token = localStorage.getItem('token')
-            const socket = new Socket('/socket', { params: { token }})
-            socket.connect()
-            // persist the socket
-            setSocket(socket)
+        const token = localStorage.getItem('token')
+        let options = {}
+        if (token !== 'undefined') {
+            options.params = { token }
         }
-    }, [user]);
+        const socket = new Socket('/socket', options)
+        socket.connect()
+        setSocket(socket)
+        // persist the socket
+    }, []);
 
 
     if (!socket) return null;

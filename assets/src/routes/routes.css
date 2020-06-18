@@ -1,0 +1,14 @@
+.ui.form input[type="text"]:focus
+{
+  color: rgba(0,0,0,.95);
+  border-color: #a333c8;
+  border-radius: .28571429rem;
+  background: #fff;
+      background-position-x: 0%;
+      background-position-y: 0%;
+      background-repeat: repeat;
+      background-attachment: scroll;
+      background-image: none;
+      background-size: auto;
+  box-shadow: 2 2 2 2 rgba(163, 51, 200, 0.9) inset;
+}

@@ -48,19 +48,29 @@
   /* background-color: rgb(232, 235, 240); */
 }
 
+#home-hero {
+  min-height: 700;
+  padding: 1em 0em;
+  /* background-color: #a4508b; */
+  /* background-color: #262522; */
+  background-image: url("https://www.transparenttextures.com/patterns/cartographer.png");
+  background-image: url("https://www.transparenttextures.com/patterns/cartographer.png"), linear-gradient(315deg, #6e72fc 0%, #ad1deb 74%);
+}
+
 #project-channel {
   /* padding-left: 0.5em; */
-  padding: 10px 100px 100px 0;
+  /* padding: 10px 100px 100px 0; */
   width: auto;
-  height: 95vh;
+  height: 99vh;
   overflow-y: scroll;
   background-color: #202230;
 }
 
 #project-sidebar {
   /* width: 100%; */
+  /* height: 100vh; */
   /* background-color: #0e0a2e; */
-  margin-left: 1em;
+  padding: 1em 0 1em 1em;
 }
 
 .project-channel::-webkit-scrollbar-track
@@ -78,4 +88,22 @@
 .project-channel::-webkit-scrollbar-thumb
 {
 	background-color: #000000;	
+}
+
+@keyframes float-title {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px)
+  }
+  100% {
+    transform: translateY(0px)
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #app-title {
+    animation: float-title infinite 3s ease-in-out;
+  }
 }

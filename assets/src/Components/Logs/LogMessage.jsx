@@ -33,48 +33,4 @@ const LogMessage = ({log}) => {
     )
 }
 
-// const [projectChannel] = useChannel(`project:${project?.id}`);
-// const [logMessages, setLogMessages] = useState([]);
-
-// const NEW_LOG_MESSAGE = 'create_log';
-
-// useEffect(() => {
-//     if(!projectChannel) return;
-
-//     // console.log(projectChannel)
-//     projectChannel.on(NEW_LOG_MESSAGE, resp => {
-//         let data = JSON.parse(resp.message)
-//         // let data = resp
-//         // let pattern = ""
-//         // console.log(logMessages);
-//         setLogMessages((logs) => [...logs, data])
-//         // setLogMessages([...logMessages, ])
-//     })
-//     setLogMessages([])
-
-//     console.log(JSON.stringify(something))
-//     setTimeout(() => {
-//         something.off(NEW_LOG_MESSAGE, projectChannel);
-//         projectChannel.leave();
-//     }, 10000)
-
-//     console.log('useEffect firing')
-//     return () => {
-//         projectChannel.off(NEW_LOG_MESSAGE, projectChannel)
-//     }
-// }, [projectChannel, project])
-
-// useEffect(() => {
-    //     if(!projectChannel) return;
-    //     projectChannel.off(NEW_LOG_MESSAGE, projectChannel)
-    // })
-// console.log(projectChannel)
-// export const LogMessage = ({message}) => {
-    
-// } 
-
-{/* export const LogLine = ({message}) => {
-    return {`${message.message}`}
-} */}
-
 export default LogMessage

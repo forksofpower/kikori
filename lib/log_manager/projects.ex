@@ -125,9 +125,13 @@ defmodule LogManager.Projects do
   end
 
   def list_project_log_messages(project_id) do
+    from m in LogMessage,
+      where: m.project_id == ^project_id,
+      select: m
+
     Repo.get(Project, project_id)
       |> Ecto.assoc(:log_messages)
-      |> Repo.all
+      |> Repo.all(limit: 100)
   end
 
   @doc """
@@ -210,5 +214,14 @@ defmodule LogManager.Projects do
   """
   def change_log_message(%LogMessage{} = log_message, attrs \\ %{}) do
     LogMessage.changeset(log_message, attrs)
+  end
+
+  @doc """
+
+  """
+  def log_message_count_estimate() do
+    Ecto.Adapters.SQL.query!(
+      Repo, "SELECT reltuples AS approximate_row_count FROM pg_class WHERE relname = 'log_messages';"
+    )
   end
 end

@@ -37,13 +37,17 @@ const Signup = () => {
     }
 
     return (
-        <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+        <Grid textAlign='center' style={{ 
+            height: '100vh',
+            backgroundImage: 'url("https://www.transparenttextures.com/patterns/cartographer.png")',
+            backgroundImage: 'url("https://www.transparenttextures.com/patterns/cartographer.png"), linear-gradient(315deg, #6e72fc 0%, #ad1deb 74%)'
+        }} verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2' color='purple' textAlign='center'>
+            <Header as='h2' textAlign='center'>
                 Get started with <code>Kik0ri</code>!
             </Header>
             <Form size='large' onSubmit={handleSubmit}>
-                <Segment stacked>
+                <Segment stacked inverted>
 				<Form.Input
 					fluid
 					icon='user'
@@ -85,8 +89,8 @@ const Signup = () => {
                 </Button>
                 </Segment>
             </Form>
-            <Message>
-                Have an account already? <Link to="/login">Login</Link>
+            <Message color="black">
+                Have an account already? <Link to="/login" style={{color: '#a333c8'}}>Login</Link>
             </Message>
             </Grid.Column>
         </Grid>

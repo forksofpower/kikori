@@ -54,6 +54,7 @@ defmodule LogManagerWeb do
     quote do
       use Phoenix.Channel
       import LogManagerWeb.Gettext
+      import LogManagerWeb.Channel.Helpers
     end
   end
 
