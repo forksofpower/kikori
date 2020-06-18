@@ -36,5 +36,6 @@ defmodule LogManagerWeb.UserSocket do
   def id(_socket), do: nil
 
   # Channels
+  channel "statistics:lobby", LogManagerWeb.StatisticsChannel
   channel "project:*", LogManagerWeb.ProjectChannel
 end

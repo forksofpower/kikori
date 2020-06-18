@@ -211,4 +211,13 @@ defmodule LogManager.Projects do
   def change_log_message(%LogMessage{} = log_message, attrs \\ %{}) do
     LogMessage.changeset(log_message, attrs)
   end
+
+  @doc """
+
+  """
+  def log_message_count_estimate() do
+    Ecto.Adapters.SQL.query!(
+      Repo, "SELECT reltuples AS approximate_row_count FROM pg_class WHERE relname = 'log_messages';"
+    )
+  end
 end

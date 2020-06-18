@@ -3,8 +3,9 @@ defmodule LogManagerWeb.LogMessageController do
   require Logger
   require IEx
 
-  # import LogManagerWeb.Endpoint, only: [broadcast!: 3]
-  alias LogManagerWeb.Endpoint
+  import LogManagerWeb.Endpoint, only: [broadcast!: 3]
+
+  # alias LogManagerWeb.Endpoint
   alias LogManager.{Guardian, Projects, Projects.LogMessage}
   alias LogManager.Projects
   alias LogManager.Projects.LogMessage
@@ -29,13 +30,11 @@ defmodule LogManagerWeb.LogMessageController do
     # message_string = "This is a test"
     message_string = Jason.encode!(log_message_params)
 
-    # IO.puts(inspect(message_string))
-
     log = %{message: message_string, project_id: project_id}
 
     with {:ok, %LogMessage{} = log_message} <- Projects.create_log_message(log) do
         # Notify any connected clients
-        Endpoint.broadcast!("project:" <> id, "create_log", %{log_message: log_message})
+        broadcast!("project:" <> id, "create_log", %{log_message: log_message})
         # IO.puts(inspect(log_message))
         conn
         |> put_status(:created)
