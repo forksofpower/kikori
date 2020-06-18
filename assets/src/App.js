@@ -56,9 +56,7 @@ const App = () => {
   const isLoading = () => !isAuthLoaded;
 
   // useSelector(auth)
-  return isLoading()
-    ? <h1>Loading...</h1>
-    : (
+  return (
         <Router>
         <Switch>
           {/* <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} /> */}

@@ -22,7 +22,10 @@ const LogMessage = ({log}) => {
     let { string } = placeholders(log_template, log.message)
 
     return (
-        <p key={() => Math.random()} style={{fontFamily: 'monospace', padding:0, margin: 0}} className="log-message">
+        <p  key={() => Math.random()} 
+            style={{fontFamily: 'monospace', padding: '1px 0 1px 1em', margin: 0}}
+            className="log-message"
+        >
             <span style={{color: colors.date, paddingRight: '1rem'}}>{log.inserted_at}</span>
             <span style={{color: colors[log.message.level], paddingRight: '1rem'}}>{log.message.level}</span>
             <span style={{color: '#427edb', paddingRight: '1rem'}}>{log.message.message}</span>

@@ -10,7 +10,7 @@ const PublicRoute = ({children, ...remainingProps}) => {
         <Route
             {...remainingProps}
             render={({ location }) => 
-                isEmpty(currentUser) ? (
+                isEmpty(currentUser) ? ( 
                     children
                 ) : (
                     <Redirect

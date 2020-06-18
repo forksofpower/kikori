@@ -48,7 +48,6 @@ const ProjectsGridContainer = ({projects}) => {
     <Card.Group centered>
         {projects && projects.map(project => (
             <Card key={project.id}>
-                {console.log(project)}
                 <Card.Content>
                     <Card.Header>{project.name}</Card.Header>
                     <Card.Meta>{project.guid?.slice(0, 23)}...</Card.Meta>

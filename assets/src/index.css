@@ -1,8 +1,9 @@
 body {
-  background-color: #dadada;
+  /* background-color: #dadada; */
   /* -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: grayscale; */
   margin: 0;
+  overflow: hidden;
   /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif; */

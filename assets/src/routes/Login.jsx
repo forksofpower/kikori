@@ -26,18 +26,15 @@ const Login = () => {
     dispatch(signin({ email, password }));
   };
 
-  // const onSubmit = data => dispatch(login(data))
-
   return (
-    <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
+    <Grid textAlign="center" style={{ height: "100vh", backgroundColor: '#a333c8' }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="purple" textAlign="center">
-          Log-in to your account
+          Log in to <code style={{fontFamily: 'monospace'}}>Kik0ri</code>
         </Header>
         <Form size="large" onSubmit={handleSubmit(onSubmit)}>
-          <Segment stacked>
+          <Segment inverted color="black" stacked>
             <Form.Field>
-              {/* <label>Email</label> */}
               <Form.Input
                 name="email"
                 placeholder="E-mail address"
@@ -46,10 +43,8 @@ const Login = () => {
                 iconPosition="left"
                 onChange={(e) => setEmail(e.target.value)}
               />
-              {/* <input type="email" name="email" ref={register} /> */}
             </Form.Field>
             <Form.Field>
-              {/* <label>Password</label> */}
               <Form.Input
                 fluid
                 icon="lock"
@@ -59,7 +54,6 @@ const Login = () => {
                 name="password"
                 onChange={(e) => setPassword(e.target.value)}
               />
-              {/* <input type="password" name="password" ref={register} /> */}
             </Form.Field>
             <br />
             <Form.Button fluid color="purple" type="submit">
@@ -67,7 +61,7 @@ const Login = () => {
             </Form.Button>
           </Segment>
         </Form>
-        <Message>
+        <Message color="black" inverted>
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </Message>
       </Grid.Column>

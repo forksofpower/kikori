@@ -37,9 +37,11 @@ const ProjectChannel = ({ project, msgs = [] }) => {
     let { scrollTop, scrollTopMax } = e.target;
 
     if (scrollTop >= scrollTopMax - 80) {
-      setTail(true)
+      if (!tail)
+        setTail(true)
     } else {
-      setTail(false)
+      if (tail)
+        setTail(false)
     }
   }
 
@@ -80,9 +82,9 @@ const ProjectChannel = ({ project, msgs = [] }) => {
   }, []);
 
   return (
-    <div style={{height: '95vh', overflow: 'scroll'}} onScroll={handleScroll}>
+    <div id="project-channel" onScroll={handleScroll}>
         <>
-        <Button onClick={moveToBottom}>Scroll into view</Button>
+        {/* <Button onClick={moveToBottom}>Scroll into view</Button> */}
         {/* {!logsLoaded &&
             <Segment>
                 <Dimmer active>

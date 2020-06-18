@@ -14,6 +14,7 @@ const Home = () => {
       {!isEmpty(currentUser) ? (
         <div>
           <h1>Welcome Home, {currentUser.name}!</h1>
+          <Button basic color="blue" onClick={() => push("/projects")}>View your Projects</Button>
           <Button basic color="red" onClick={() => push("/signout")}>
             Signout
           </Button>
