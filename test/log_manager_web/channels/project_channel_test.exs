@@ -1,11 +1,11 @@
-defmodule LogManagerWeb.ProjectChannelTest do
-  use LogManagerWeb.ChannelCase
+defmodule KikoriWeb.ProjectChannelTest do
+  use KikoriWeb.ChannelCase
 
   setup do
     {:ok, _, socket} =
-      LogManagerWeb.UserSocket
+      KikoriWeb.UserSocket
       |> socket("user_id", %{some: :assign})
-      |> subscribe_and_join(LogManagerWeb.ProjectChannel, "project:lobby")
+      |> subscribe_and_join(KikoriWeb.ProjectChannel, "project:lobby")
 
     %{socket: socket}
   end

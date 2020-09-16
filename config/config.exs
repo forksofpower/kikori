@@ -7,15 +7,15 @@
 # General application configuration
 use Mix.Config
 
-config :log_manager,
-  ecto_repos: [LogManager.Repo]
+config :kikori,
+  ecto_repos: [Kikori.Repo]
 
 # Configures the endpoint
-config :log_manager, LogManagerWeb.Endpoint,
+config :kikori, KikoriWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "whBTKkImubRyrK+FsJSgmiJjWiDBqit+4vlJqeYvEKnhQPI5BPUTI9J49yxI6//0",
-  render_errors: [view: LogManagerWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: LogManager.PubSub,
+  render_errors: [view: KikoriWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Kikori.PubSub,
   live_view: [signing_salt: "dS4eNi7k"]
 
 # Configures Elixir's Logger
@@ -27,8 +27,8 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 # Guardian Auth
-config :log_manager, LogManager.Guardian,
-        issuer: "LogManager",
+config :kikori, Kikori.Guardian,
+        issuer: "Kikori",
         secret_key: "I1L3XdEs8+JyRTTue5VWDUWZ0mFya06OKp6LHOSpLO3si51ht9HZxd3gpmTsbmA5"
   # allowed_algos: ["HS512"], # optional
   # verify_module: Guardian.JWT,  # optional

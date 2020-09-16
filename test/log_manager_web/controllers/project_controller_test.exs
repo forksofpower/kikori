@@ -1,8 +1,8 @@
-defmodule LogManagerWeb.ProjectControllerTest do
-  use LogManagerWeb.ConnCase
+defmodule KikoriWeb.ProjectControllerTest do
+  use KikoriWeb.ConnCase
 
-  alias LogManager.Projects
-  alias LogManager.Projects.Project
+  alias Kikori.Projects
+  alias Kikori.Projects.Project
 
   @create_attrs %{
     name: "some name"

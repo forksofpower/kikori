@@ -6,7 +6,7 @@ FROM elixir:1.8.2-alpine AS builder
 
 # The following are build arguments used to change variable parts of the image.
 # The name of your application/release (required)
-ARG APP_NAME=log_manager
+ARG APP_NAME=kikori
 # The version of the application we are building (required)
 ARG APP_VSN=0.1.0
 # The environment to build with
@@ -68,7 +68,7 @@ RUN \
 FROM alpine:${ALPINE_VERSION}
 
 # The name of your application/release (required)
-ARG APP_NAME=log_manager
+ARG APP_NAME=kikori
 
 RUN apk update && \
     apk add --no-cache \

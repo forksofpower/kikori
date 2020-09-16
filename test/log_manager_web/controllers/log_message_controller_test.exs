@@ -1,8 +1,8 @@
-defmodule LogManagerWeb.LogMessageControllerTest do
-  use LogManagerWeb.ConnCase
+defmodule KikoriWeb.LogMessageControllerTest do
+  use KikoriWeb.ConnCase
 
-  alias LogManager.Projects
-  alias LogManager.Projects.LogMessage
+  alias Kikori.Projects
+  alias Kikori.Projects.LogMessage
 
   @create_attrs %{
     data: "some data",

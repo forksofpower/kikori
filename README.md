@@ -1,4 +1,4 @@
-# LogManager
+# Kikori
 
 To start your Phoenix server:
 

@@ -1,9 +1,9 @@
-defmodule LogManager.MixProject do
+defmodule Kikori.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :log_manager,
+      app: :kikori,
       version: "0.1.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule LogManager.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {LogManager.Application, []},
+      mod: {Kikori.Application, []},
       extra_applications: [:logger, :runtime_tools, :guardian]
     ]
   end
