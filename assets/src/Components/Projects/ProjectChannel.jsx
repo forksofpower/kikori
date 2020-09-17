@@ -21,6 +21,12 @@ const ProjectChannel = ({ project, msgs = [] }) => {
   const ref = React.createRef();
   const [tail, setTail] = useState(true)
   const dispatch = useDispatch();
+  
+  if (project.id === 3 || project.id === "3") {
+    console.group("Project ID is wrong")
+    console.log(project)
+    console.groupEnd()
+  }
   const [projectChannel] = useChannel(`project:${project.id}`);
   const log_messages = useSelector(selectAllLogs);
   const logsLoaded = useSelector(selectLogsLoaded);

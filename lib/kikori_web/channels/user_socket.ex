@@ -41,6 +41,6 @@ defmodule KikoriWeb.UserSocket do
   def id(_socket), do: nil
 
   # Channels
-  channel "statistics:lobby", KikoriWeb.StatisticsChannel
+  # channel "statistics:lobby", KikoriWeb.StatisticsChannel
   channel "project:*", KikoriWeb.ProjectChannel
 end

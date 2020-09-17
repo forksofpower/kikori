@@ -1,3 +1,4 @@
+require IEx
 defmodule Kikori.Projects do
   @moduledoc """
   The Projects context.
@@ -41,6 +42,7 @@ defmodule Kikori.Projects do
 
   """
   def get_project!(id) do
+    IEx.pry
     Repo.get!(Project, id) |> Repo.preload(:user)
   end
 
