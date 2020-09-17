@@ -1,4 +1,4 @@
-defmodule LogManager.DataCase do
+defmodule Kikori.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -10,7 +10,7 @@ defmodule LogManager.DataCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use LogManager.DataCase, async: true`, although
+  by setting `use Kikori.DataCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -18,20 +18,20 @@ defmodule LogManager.DataCase do
 
   using do
     quote do
-      alias LogManager.Repo
+      alias Kikori.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import LogManager.DataCase
+      import Kikori.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(LogManager.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Kikori.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(LogManager.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Kikori.Repo, {:shared, self()})
     end
 
     :ok

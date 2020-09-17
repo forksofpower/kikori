@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link, NavLink, useHistory } from 'react-router-dom'
-import { Button, Tab, Container } from 'semantic-ui-react';
+import { Button, Tab, Container, Grid, Header } from 'semantic-ui-react';
 import Highlight from "react-highlight.js";
-
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useState } from 'react';
 
 const ElixirPane = ({projectId, userId, token, message}) => {
     return (<Highlight>{
@@ -45,18 +46,18 @@ axios.post('https://kikori.space/api/v1/commit', data, {
 }).catch((error) => {
     console.error(error)
 })
-`}</Highlight>)}
+`}</Highlight>
+    )
+}
+
 const CurlPane = ({projectId, token, url, message}) => {
     return (
         // <Tab.Pane style={{margin: 0}}>
             <Highlight language="bash">
-{`curl https://logs.timber.io/sources/38946/frames -X POST
--H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2FwaS50a
-    W1iZXIuaW8vIiwiZXhwIjpudWxsLCJpYXQiOjE1OTIyOTE5OTksImlzcyI6Imh0dHBzOi8vYXBpLnRpbWJlci5pby
-    9hcGlfa2V5cyIsInByb3ZpZGVyX2NsYWltcyI6eyJhcGlfa2V5X2lkIjo4Mjk5LCJ1c2VyX2lkIjoiYXBpX2tleXw4
-    Mjk5In0sInN1YiI6ImFwaV9rZXl8ODI5OSJ9._P6KOdaXtTef0PuZ2wqX1LUs94vwB3mEcqxIxl7N8RQ'
--H "Content-Type: application/json"
--d '{"message": ""}`}
+{`curl http://localhost:4000/api/v1/commit?project_id=${projectId} -X POST \\
+-H 'Authorization: Bearer ${token}' \\
+-H "Content-Type: application/json" \\
+-d '{"log_message": { "level": "info", "message": "Testing from the command line!" }}'`}
             </Highlight>
         // </Tab.Pane>
     )   
@@ -65,22 +66,40 @@ const CurlPane = ({projectId, token, url, message}) => {
 const ProjectSidebar = ({project}) => {
     let { push } = useHistory();
     let token = localStorage.getItem('token')
+    let [tokenCopied, setTokenCopied] = useState(false);
 
     const panes = [
         { menuItem: 'curl', render: () =>  <CurlPane projectId={project.id} token={token}/>},
         { menuItem: 'nodejs', render: () => <NodePane projectId={project.id} token={token} />},
-        { menuItem: 'elixir', render: () => <ElixirPane projectId={project.id} token={token} />}
+        { menuItem: 'elixir', render: () => <ElixirPane projectId={project.id} token={token} />},
+        { menuItem: 'java', render: () => null },
+        { menuItem: 'scala', render: () => null },
+        { menuItem: 'kotlin', render: () => null },
+        { menuItem: 'ruby', render: () => null },
+        { menuItem: 'go', render: () => null },
     ]
     return (
         project ? (
-            <Container id="project-sidebar">
-                <h1 style={{color: 'white'}}>{project.name}</h1>
-                <h3 style={{color: 'grey'}}>{project.guid}</h3>
+            <div id="project-sidebar">
+                <label htmlFor="project-name">project:</label>
+                <Header as="h2" inverted>{project.name}</Header>
 
+                <label htmlFor="guid">id:</label>
+                <Header as="h3" inverted>{project.guid}</Header>
+                
                 <br/>
-                <h4>Get Started</h4>
-                <Tab menu={{ color: 'purple', inverted: true}} panes={panes} />
-            </Container>
+                <span>
+                    <CopyToClipboard 
+                        text={token}
+                        onCopy={() => setTokenCopied(true)}
+                    >
+                        <Button color="purple" style={{fontFamily: 'monospace'}}>{tokenCopied ? 'token copied!' : 'copy token'}</Button>
+                    </CopyToClipboard>
+                </span>
+                <hr/>
+                <h2>Get Started</h2>
+                <Tab menu={{ inverted: true, id:"code-sample-menu", pointing: true}} panes={panes} />
+            </div>
         ) : (
             <h1>Loading...</h1>
         )
@@ -88,9 +107,3 @@ const ProjectSidebar = ({project}) => {
 }
 
 export default ProjectSidebar
-
-
-// project name
-// project id
-// prject stats
-// connection instructions

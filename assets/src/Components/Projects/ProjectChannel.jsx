@@ -15,12 +15,18 @@ import {
   selectLogById,
 } from "../../store/logs.slice";
 import LogMessage from "../Logs/LogMessage";
-import { Segment, Dimmer, Loader, Image, Button } from "semantic-ui-react";
+import { Segment, Dimmer, Loader, Image, Button, Container, Grid, Header } from "semantic-ui-react";
 
 const ProjectChannel = ({ project, msgs = [] }) => {
   const ref = React.createRef();
   const [tail, setTail] = useState(true)
   const dispatch = useDispatch();
+  
+  if (project.id === 3 || project.id === "3") {
+    console.group("Project ID is wrong")
+    console.log(project)
+    console.groupEnd()
+  }
   const [projectChannel] = useChannel(`project:${project.id}`);
   const log_messages = useSelector(selectAllLogs);
   const logsLoaded = useSelector(selectLogsLoaded);
@@ -69,7 +75,6 @@ const ProjectChannel = ({ project, msgs = [] }) => {
 
     return () => {
       projectChannel.off("create_log", projectChannel);
-      // projectChannel.leave();
     };
   }, [project, projectChannel]);
 
@@ -83,24 +88,29 @@ const ProjectChannel = ({ project, msgs = [] }) => {
 
   return (
     <div id="project-channel" onScroll={handleScroll}>
-        <>
-        {/* <Button onClick={moveToBottom}>Scroll into view</Button> */}
-        {/* {!logsLoaded &&
-            <Segment>
-                <Dimmer active>
-                    <Loader content='Loading' />
-                </Dimmer>
-        
-            <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
-            </Segment>
 
-        } */}
-        {logsLoaded && log_messages && (
+        {logsLoaded && (log_messages.length > 0 )&& (
           log_messages.map((log) => 
             <LogMessage key={Math.random()} log={log}/>
           )
         )}
         
+        {logsLoaded && (log_messages.length === 0) && (
+          <Grid textAlign="center" style={{ 
+            height: "100%",
+            padding: 0,
+            margin: 0
+            // backgroundImage: 'url("https://www.transparenttextures.com/patterns/cartographer.png")',
+            // backgroundImage: 'url("https://www.transparenttextures.com/patterns/cartographer.png"), linear-gradient(315deg, #6e72fc 0%, #ad1deb 74%)'
+          }} verticalAlign="middle">
+            <Grid.Column style={{maxWidth: '450px'}}>
+              <Loader active></Loader>
+              <br/><br/><br/>
+              <Header inverted  style={{fontFamily: 'monospace'}} as="h2">listening for messages...</Header>
+            </Grid.Column>
+          </Grid>
+        )}
+
         {logsLoaded && log_messages && (
             <div  ref={ref} 
                   name="logTail"
@@ -108,7 +118,6 @@ const ProjectChannel = ({ project, msgs = [] }) => {
             >
             </div>
         )}
-        </>
     </div>
   );
 };

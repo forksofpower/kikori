@@ -1,4 +1,4 @@
-defmodule LogManagerWeb.ChannelCase do
+defmodule KikoriWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -11,7 +11,7 @@ defmodule LogManagerWeb.ChannelCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use LogManagerWeb.ChannelCase, async: true`, although
+  by setting `use KikoriWeb.ChannelCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -21,18 +21,18 @@ defmodule LogManagerWeb.ChannelCase do
     quote do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
-      import LogManagerWeb.ChannelCase
+      import KikoriWeb.ChannelCase
 
       # The default endpoint for testing
-      @endpoint LogManagerWeb.Endpoint
+      @endpoint KikoriWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(LogManager.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Kikori.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(LogManager.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Kikori.Repo, {:shared, self()})
     end
 
     :ok

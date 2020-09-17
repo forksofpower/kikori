@@ -1,3 +1,3 @@
-defmodule LogManagerWeb.PageViewTest do
-  use LogManagerWeb.ConnCase, async: true
+defmodule KikoriWeb.PageViewTest do
+  use KikoriWeb.ConnCase, async: true
 end

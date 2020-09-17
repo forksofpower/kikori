@@ -1,5 +1,5 @@
-defmodule LogManagerWeb.PageControllerTest do
-  use LogManagerWeb.ConnCase
+defmodule KikoriWeb.PageControllerTest do
+  use KikoriWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")

@@ -1,4 +1,4 @@
-defmodule LogManager.Repo.Migrations.AddUuidGenerateV4ExtensionToDatabase do
+defmodule Kikori.Repo.Migrations.AddUuidGenerateV4ExtensionToDatabase do
   use Ecto.Migration
 
   def change do

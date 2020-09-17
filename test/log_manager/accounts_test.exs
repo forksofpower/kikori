@@ -1,10 +1,10 @@
-defmodule LogManager.AccountsTest do
-  use LogManager.DataCase
+defmodule Kikori.AccountsTest do
+  use Kikori.DataCase
 
-  alias LogManager.Accounts
+  alias Kikori.Accounts
 
   describe "users" do
-    alias LogManager.Accounts.User
+    alias Kikori.Accounts.User
 
     @valid_attrs %{email: "some email", is_admin: true, name: "some name", password_hash: "some password_hash", phone: "some phone"}
     @update_attrs %{email: "some updated email", is_admin: false, name: "some updated name", password_hash: "some updated password_hash", phone: "some updated phone"}

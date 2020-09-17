@@ -30,7 +30,9 @@ const Login = () => {
 
   return (
     <Grid textAlign="center" style={{ 
-        height: "100vh", 
+        height: "100vh",
+        padding: 0,
+        margin: 0,
         backgroundImage: 'url("https://www.transparenttextures.com/patterns/cartographer.png")',
         backgroundImage: 'url("https://www.transparenttextures.com/patterns/cartographer.png"), linear-gradient(315deg, #6e72fc 0%, #ad1deb 74%)'
       }} verticalAlign="middle">

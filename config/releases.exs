@@ -7,21 +7,21 @@ db_user = System.get_env("DB_USER")
 db_password = System.get_env("DB_PASSWORD")
 db_host = System.get_env("DB_HOST")
 
-config :log_manager, LogManager.Endpoint,
+config :kikori, Kikori.Endpoint,
   server: true,
   http: [:inet6, port:  4000],
   secret_key_base: secret_key_base
 
-config :log_manager,
+config :kikori,
   app_port: app_port
 
-config :log_manager,
+config :kikori,
   app_hostname: app_hostname
 
 # Configure your database
-# config :log_manager, LogManager.Repo,
+# config :kikori, Kikori.Repo,
 #   username: db_user,
 #   password: db_password,
-#   database: "log_manager_prod",
+#   database: "kikori_prod",
 #   hostname: db_host,
 #   pool_size: 10

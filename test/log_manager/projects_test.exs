@@ -1,10 +1,10 @@
-defmodule LogManager.ProjectsTest do
-  use LogManager.DataCase
+defmodule Kikori.ProjectsTest do
+  use Kikori.DataCase
 
-  alias LogManager.Projects
+  alias Kikori.Projects
 
   describe "projects" do
-    alias LogManager.Projects.Project
+    alias Kikori.Projects.Project
 
     @valid_attrs %{name: "some name"}
     @update_attrs %{name: "some updated name"}
@@ -63,7 +63,7 @@ defmodule LogManager.ProjectsTest do
   end
 
   describe "log_messages" do
-    alias LogManager.Projects.LogMessage
+    alias Kikori.Projects.LogMessage
 
     @valid_attrs %{data: "some data", request_data: "some request_data", type: "some type"}
     @update_attrs %{data: "some updated data", request_data: "some updated request_data", type: "some updated type"}

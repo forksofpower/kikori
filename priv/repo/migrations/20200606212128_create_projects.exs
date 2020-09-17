@@ -1,4 +1,4 @@
-defmodule LogManager.Repo.Migrations.CreateProjects do
+defmodule Kikori.Repo.Migrations.CreateProjects do
   use Ecto.Migration
 
   def change do

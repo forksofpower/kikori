@@ -1,4 +1,4 @@
-defmodule LogManager.Repo.Migrations.AddGuidToProjects do
+defmodule Kikori.Repo.Migrations.AddGuidToProjects do
   use Ecto.Migration
 
   def change do

@@ -48,10 +48,9 @@ end
 # when running `mix distillery.release`, the first release in the file
 # will be used by default
 
-release :log_manager do
-  set version: current_version(:log_manager)
+release :kikori do
+  set version: current_version(:kikori)
   set applications: [
     :runtime_tools
   ]
 end
-

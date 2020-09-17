@@ -11,7 +11,7 @@ use Mix.Config
 #     For example: ecto://USER:PASS@HOST/DATABASE
 #     """
 
-# config :log_manager, LogManager.Repo,
+# config :kikori, Kikori.Repo,
 #   # ssl: true,
 #   url: database_url,
 #   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
@@ -23,7 +23,7 @@ secret_key_base = "whBTKkImubRyrK+FsJSgmiJjWiDBqit+4vlJqeYvEKnhQPI5BPUTI9J49yxI6
 #     You can generate one by calling: mix phx.gen.secret
 #     """
 
-config :log_manager, LogManager.Repo,
+config :kikori, Kikori.Repo,
   username: "postgres",
   password: "postgres",
   database: "kikori_db",
@@ -31,7 +31,7 @@ config :log_manager, LogManager.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
-config :log_manager, LogManagerWeb.Endpoint,
+config :kikori, KikoriWeb.Endpoint,
   http: [
     port: "4000",
     transport_options: [socket_opts: [:inet6]]
@@ -43,7 +43,7 @@ config :log_manager, LogManagerWeb.Endpoint,
 # If you are doing OTP releases, you need to instruct Phoenix
 # to start each relevant endpoint:
 #
-config :log_manager, LogManagerWeb.Endpoint, server: true
+config :kikori, KikoriWeb.Endpoint, server: true
 #
 # Then you can assemble a release by calling `mix release`.
 # See `mix help release` for more information.

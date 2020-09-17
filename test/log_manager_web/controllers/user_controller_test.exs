@@ -1,8 +1,8 @@
-defmodule LogManagerWeb.UserControllerTest do
-  use LogManagerWeb.ConnCase
+defmodule KikoriWeb.UserControllerTest do
+  use KikoriWeb.ConnCase
 
-  alias LogManager.Accounts
-  alias LogManager.Accounts.User
+  alias Kikori.Accounts
+  alias Kikori.Accounts.User
 
   @create_attrs %{
     email: "some email",

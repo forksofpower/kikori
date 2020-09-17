@@ -101,7 +101,7 @@ const HomepageHeading = ({ mobile }) => (
     />
     <Header
       as='h2'
-      content="A centralized logging platform with structured data, for people who don't know what that is."
+      content="A centralized logging platform for structured data, built with Elixir, Phoenix, React, and Redux."
       inverted
       style={{
         fontSize: mobile ? '1.5em' : '1.7em',
@@ -191,7 +191,7 @@ ResponsiveContainer.propTypes = {
 
 const Home = () => (
   <ResponsiveContainer>
-    <Segment style={{ padding: '0em' }} vertical inverted>
+    {/* <Segment style={{ padding: '0em' }} vertical inverted>
       <Grid columns='equal' stackable>
         <Grid.Row textAlign='center'>
           <Grid.Column style={{ paddingBottom: '10em', paddingTop: '5em' }}>
@@ -211,7 +211,7 @@ const Home = () => (
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </Segment>
+    </Segment> */}
 
     <Segment inverted vertical style={{ padding: '5em 0em' }}>
       <Container>
@@ -240,7 +240,7 @@ const Home = () => (
                 Footer Header
               </Header>
               <p>
-                Extra space for a call to action inside the footer that could help re-engage users.
+                A centralized logging platform for structured data, built for people who don't know what that is.
               </p>
             </Grid.Column>
           </Grid.Row>
