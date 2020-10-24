@@ -1,85 +1,103 @@
-# The version of Alpine to use for the final image
-# This should match the version of Alpine that the `elixir:1.8.2-alpine` image uses
-ARG ALPINE_VERSION=3.9
+# build client
+FROM node:10-alpine AS assets
+WORKDIR /assets
+COPY ./assets /assets
+RUN yarn install && yarn build
 
-FROM elixir:1.8.2-alpine AS builder
-
-# The following are build arguments used to change variable parts of the image.
-# The name of your application/release (required)
-ARG APP_NAME=kikori
-# The version of the application we are building (required)
-ARG APP_VSN=0.1.0
-# The environment to build with
+# build server
+FROM elixir:1.10.4-alpine
 ARG MIX_ENV=prod
-# Set this to true if this release is not a Phoenix app
-ARG SKIP_PHOENIX=false
-# If you are using an umbrella project, you can change this
-# argument to the directory the Phoenix app is in so that the assets
-# can be built
-ARG PHOENIX_SUBDIR=.
+ARG DATABASE_URL=postgres://postgres:postgres:localhost/kikori
+ARG SECRET_KEY_BASE=secret
+ENV MIX_HOME=/root/.mix
+WORKDIR /
+COPY . /
+COPY --from=assets /assets/build /assets/build
+RUN apk --no-cache add curl build-base
+RUN mix local.hex --force && mix local.rebar --force && mix do deps.get, compile
+CMD mix phx.server
+# # The version of Alpine to use for the final image
+# # This should match the version of Alpine that the `elixir:1.8.2-alpine` image uses
+# ARG ALPINE_VERSION=3.9
 
-ENV SKIP_PHOENIX=${SKIP_PHOENIX} \
-    APP_NAME=${APP_NAME} \
-    APP_VSN=${APP_VSN} \
-    MIX_ENV=${MIX_ENV}
+# FROM elixir:1.8.2-alpine AS builder
 
-# By convention, /opt is typically used for applications
-WORKDIR /opt/app
+# # The following are build arguments used to change variable parts of the image.
+# # The name of your application/release (required)
+# ARG APP_NAME=kikori
+# # The version of the application we are building (required)
+# ARG APP_VSN=0.1.0
+# # The environment to build with
+# ARG MIX_ENV=prod
+# # Set this to true if this release is not a Phoenix app
+# ARG SKIP_PHOENIX=false
+# # If you are using an umbrella project, you can change this
+# # argument to the directory the Phoenix app is in so that the assets
+# # can be built
+# ARG PHOENIX_SUBDIR=.
 
-# This step installs all the build tools we'll need
-RUN apk update && \
-  apk upgrade --no-cache && \
-  apk add --no-cache \
-    nodejs \
-    yarn \
-    git \
-    build-base && \
-  mix local.rebar --force && \
-  mix local.hex --force
+# ENV SKIP_PHOENIX=${SKIP_PHOENIX} \
+#     APP_NAME=${APP_NAME} \
+#     APP_VSN=${APP_VSN} \
+#     MIX_ENV=${MIX_ENV}
 
-# This copies our app source code into the build container
-COPY . .
+# # By convention, /opt is typically used for applications
+# WORKDIR /opt/app
 
-RUN mix do deps.get, deps.compile, compile
-# RUN mix ecto.drop && \
-#     mix ecto.create && \
-#     mix ecto.migrate
+# # This step installs all the build tools we'll need
+# RUN apk update && \
+#   apk upgrade --no-cache && \
+#   apk add --no-cache \
+#     nodejs \
+#     yarn \
+#     git \
+#     build-base && \
+#   mix local.rebar --force && \
+#   mix local.hex --force
 
-# This step builds assets for the Phoenix app (if there is one)
-# If you aren't building a Phoenix app, pass `--build-arg SKIP_PHOENIX=true`
-# This is mostly here for demonstration purposes
-RUN if [ ! "$SKIP_PHOENIX" = "true" ]; then \
-  cd ${PHOENIX_SUBDIR}/assets && \
-  yarn install && \
-  yarn run build && \
-  cd -; \
-  mix phx.digest; \
-fi
+# # This copies our app source code into the build container
+# COPY . .
 
-RUN \
-  mkdir -p /opt/built && \
-  mix distillery.release --verbose && \
-  cp _build/${MIX_ENV}/rel/${APP_NAME}/releases/${APP_VSN}/${APP_NAME}.tar.gz /opt/built && \
-  cd /opt/built && \
-  tar -xzf ${APP_NAME}.tar.gz && \
-  rm ${APP_NAME}.tar.gz
+# RUN mix do deps.get, deps.compile, compile
+# # RUN mix ecto.drop && \
+# #     mix ecto.create && \
+# #     mix ecto.migrate
 
-# From this line onwards, we're in a new image, which will be the image used in production
-FROM alpine:${ALPINE_VERSION}
+# # This step builds assets for the Phoenix app (if there is one)
+# # If you aren't building a Phoenix app, pass `--build-arg SKIP_PHOENIX=true`
+# # This is mostly here for demonstration purposes
+# RUN if [ ! "$SKIP_PHOENIX" = "true" ]; then \
+#   cd ${PHOENIX_SUBDIR}/assets && \
+#   yarn install && \
+#   yarn run build && \
+#   cd -; \
+#   mix phx.digest; \
+# fi
 
-# The name of your application/release (required)
-ARG APP_NAME=kikori
+# RUN \
+#   mkdir -p /opt/built && \
+#   mix distillery.release --verbose && \
+#   cp _build/${MIX_ENV}/rel/${APP_NAME}/releases/${APP_VSN}/${APP_NAME}.tar.gz /opt/built && \
+#   cd /opt/built && \
+#   tar -xzf ${APP_NAME}.tar.gz && \
+#   rm ${APP_NAME}.tar.gz
 
-RUN apk update && \
-    apk add --no-cache \
-      bash \
-      openssl-dev
+# # From this line onwards, we're in a new image, which will be the image used in production
+# FROM alpine:${ALPINE_VERSION}
 
-ENV REPLACE_OS_VARS=true \
-    APP_NAME=${APP_NAME}
+# # The name of your application/release (required)
+# ARG APP_NAME=kikori
 
-WORKDIR /opt/app
+# RUN apk update && \
+#     apk add --no-cache \
+#       bash \
+#       openssl-dev
 
-COPY --from=builder /opt/built .
+# ENV REPLACE_OS_VARS=true \
+#     APP_NAME=${APP_NAME}
 
-CMD trap 'exit' INT; /opt/app/bin/${APP_NAME} foreground
+# WORKDIR /opt/app
+
+# COPY --from=builder /opt/built .
+
+# CMD trap 'exit' INT; /opt/app/bin/${APP_NAME} foreground

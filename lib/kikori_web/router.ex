@@ -24,7 +24,7 @@ defmodule KikoriWeb.Router do
   scope "/", KikoriWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/*path", PageController, :index
   end
 
   scope "/api/v1", KikoriWeb do
