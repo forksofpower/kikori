@@ -10,10 +10,11 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :kikori, KikoriWeb.Endpoint,
+  # load_from_system_env: true,
+  http: [:inet6, port: 443],
   url: [scheme: "https", host: "kikori.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]]
   # server: true,
-  # load_from_system_env: true,
   # url: [host: Application.get_env(:kikori, :app_hostname), port: Application.get_env(:kikori, :app_port)]
   # cache_static_manifest: "priv/static/cache_manifest.json"
 
