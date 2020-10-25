@@ -1,8 +1,9 @@
 build:
-    docker:
-		web: Dockerfile
+  docker:
+    web: Dockerfile
 release:
-	image: web
-	command: - POOL_SIZE=2 mix ecto.migrate
+  image: web
+  command:
+    - POOL_SIZE=2 mix ecto.migrate
 run:
-	web: mix phx.server
+  web: mix phx.server
