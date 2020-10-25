@@ -4,7 +4,7 @@ defmodule KikoriWeb.Router do
   alias Kikori.Guardian
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "json"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
@@ -21,12 +21,6 @@ defmodule KikoriWeb.Router do
     plug Guardian.AuthPipeline
   end
 
-  scope "/", KikoriWeb do
-    pipe_through :browser
-
-    get "/", PageController, :index
-  end
-
   scope "/api/v1", KikoriWeb do
     # public
     pipe_through :api
@@ -40,6 +34,8 @@ defmodule KikoriWeb.Router do
     pipe_through :jwt_authenticated
 
     resources "/users", UserController, only: [:index, :show]
+    options "/users", UserController, :options
+
     resources "/projects", ProjectController, except: [:new, :edit] do
       resources "/logs", LogMessageController, only: [:create, :index, :show]
       options "/logs", LogMessageController, :options
@@ -47,12 +43,16 @@ defmodule KikoriWeb.Router do
     options "/projects", ProjectController, :options
 
     resources "/logs", LogMessageController, except: [:new, :edit]
+    options "/logs", LogMessageController, :options
+
     get "/me", UserController, :show
     options "/me", UserController, :options
 
     post "/commit", LogMessageController, :create
     options "/commit", LogMessageController, :options
   end
+
+
 
   # scope "/api/v1", KikoriWeb do
     # private
@@ -80,5 +80,11 @@ defmodule KikoriWeb.Router do
       pipe_through :browser
       live_dashboard "/dashboard", metrics: KikoriWeb.Telemetry
     end
+  end
+
+  scope "/", KikoriWeb do
+    # pipe_through :browser
+
+    get "/*path", PageController, :index
   end
 end

@@ -1,5 +1,8 @@
-deps
-_build
-assets/node_modules
-assets/build
-assets/dist
+/.git
+/deps
+/_build
+/assets/node_modules
+/assets/build
+/assets/dist
+/cover
+/coverage

@@ -5,7 +5,6 @@ defmodule KikoriWeb.LogMessageController do
 
   import KikoriWeb.Endpoint, only: [broadcast!: 3]
 
-  # alias KikoriWeb.Endpoint
   alias Kikori.{Guardian, Projects, Projects.LogMessage}
   alias Kikori.Projects
   alias Kikori.Projects.LogMessage
@@ -31,11 +30,12 @@ defmodule KikoriWeb.LogMessageController do
     message_string = Jason.encode!(log_message_params)
 
     log = %{message: message_string, project_id: project_id}
+    # IEx.pry
 
     with {:ok, %LogMessage{} = log_message} <- Projects.create_log_message(log) do
         # Notify any connected clients
         broadcast!("project:" <> id, "create_log", %{log_message: log_message})
-        # IO.puts(inspect(log_message))
+
         conn
         |> put_status(:created)
         |> put_resp_header("location", Routes.log_message_path(conn, :show, log_message))

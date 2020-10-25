@@ -5,10 +5,10 @@ defmodule KikoriWeb.ProjectControllerTest do
   alias Kikori.Projects.Project
 
   @create_attrs %{
-    name: "some name"
+    name: "Test Project"
   }
   @update_attrs %{
-    name: "some updated name"
+    name: "Updated Test Project"
   }
   @invalid_attrs %{name: nil}
 
@@ -29,6 +29,7 @@ defmodule KikoriWeb.ProjectControllerTest do
   end
 
   describe "create project" do
+    @tag: authenticated
     test "renders project when data is valid", %{conn: conn} do
       conn = post(conn, Routes.project_path(conn, :create), project: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]

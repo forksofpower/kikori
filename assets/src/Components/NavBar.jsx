@@ -15,7 +15,7 @@ const NavBar = () => {
           style={{ height: '10vh', width: '100%', paddingLeft: '2rem', paddingRight: '2rem'}}
         >
             <Menu
-                fixed
+                fixed="top"
                 secondary
                 size='large'
             >

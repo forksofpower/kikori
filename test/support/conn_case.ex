@@ -38,6 +38,15 @@ defmodule KikoriWeb.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(Kikori.Repo, {:shared, self()})
     end
 
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    {conn, user} = if tags[:authenticated] do
+      {:ok, user} = Kikori.Accounts.create_user(%{username: "forksofpower", email: "forksofpower@god.com", password: "TestPassword11!", password_confirmation: "TestPassword11!"})
+
+      conn = conn
+      |> Plug.Session.call(@)
+    else
+      {Phoenix.ConnTest.build_conn(), nil}
+    end
+
+    {:ok, conn: conn, user: user}
   end
 end

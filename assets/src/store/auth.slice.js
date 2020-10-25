@@ -81,7 +81,7 @@ export const getCurrentUser = () => dispatch => {
         // console.log(resp)
         if (data.error) {
             // deal with errors
-            console.log('something went wrong...')
+            console.log('login error: ', data.error)
         } else {
             dispatch(login(data))
             dispatch(loadingComplete())
