@@ -4,18 +4,30 @@ defmodule KikoriWeb.LogMessageControllerTest do
   alias Kikori.Projects
   alias Kikori.Projects.LogMessage
 
+  @project_attrs %{
+    name: "Test Project"
+  }
   @create_attrs %{
-    data: "some data",
-    request_data: "some request_data",
-    type: "some type"
+    project_id: 1,
+    message: "{}"
   }
   @update_attrs %{
-    data: "some updated data",
-    request_data: "some updated request_data",
-    type: "some updated type"
+    message: "{ \"level\": \"warn\", \"\"}"
   }
   @invalid_attrs %{data: nil, request_data: nil, type: nil}
 
+  def project_fixture(attrs \\ %{}) do
+    {:ok, project} =
+      attrs
+        |> Enum.into(@project_attrs)
+        |> Projects.create_project()
+
+    project
+  end
+  # def proj(:project) do
+  #   {:ok, project} = Projects.create_project(@project_attrs)
+  #   project
+  # end
   def fixture(:log_message) do
     {:ok, log_message} = Projects.create_log_message(@create_attrs)
     log_message
@@ -41,9 +53,8 @@ defmodule KikoriWeb.LogMessageControllerTest do
 
       assert %{
                "id" => id,
-               "data" => "some data",
-               "request_data" => "some request_data",
-               "type" => "some type"
+               "project_id" => project_id,
+               "message" => message
              } = json_response(conn, 200)["data"]
     end
 
@@ -89,6 +100,10 @@ defmodule KikoriWeb.LogMessageControllerTest do
     end
   end
 
+  defp create_project(_) do
+    project = project_fixture()
+    project
+  end
   defp create_log_message(_) do
     log_message = fixture(:log_message)
     %{log_message: log_message}
