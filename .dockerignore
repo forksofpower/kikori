@@ -4,3 +4,5 @@
 /assets/node_modules
 /assets/build
 /assets/dist
+/cover
+/coverage
