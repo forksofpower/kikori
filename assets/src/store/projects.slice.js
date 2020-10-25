@@ -3,7 +3,7 @@ import { normalize, schema } from "normalizr";
 import { isEmpty } from "../helpers";
 
 // const URL = 'https://en33spkgpultt.x.pipedream.net/projects';
-const URL = 'http://localhost:3000/api/v1/projects'
+const URL = '/api/v1/projects'
 
 
 export const projectEntity = new schema.Entity('projects');
@@ -41,7 +41,6 @@ export const fetchOneProject = createAsyncThunk(
             }
         })
         .then(resp => resp.json())
-        
         return data
     }
 )

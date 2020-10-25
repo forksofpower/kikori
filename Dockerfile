@@ -11,9 +11,9 @@ ARG DATABASE_URL=postgres://postgres:postgres:localhost/kikori
 ARG SECRET_KEY_BASE=secret
 ENV MIX_HOME=/root/.mix
 WORKDIR /
+RUN apk --no-cache add curl build-base
 COPY . /
 COPY --from=assets /assets/build /assets/build
-RUN apk --no-cache add curl build-base
 RUN mix local.hex --force && mix local.rebar --force && mix do deps.get, compile
 CMD mix phx.server
 # # The version of Alpine to use for the final image

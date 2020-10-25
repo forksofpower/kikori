@@ -64,45 +64,41 @@ const CurlPane = ({projectId, token, url, message}) => {
 }
 
 const ProjectSidebar = ({project}) => {
-    let { push } = useHistory();
-    let token = localStorage.getItem('token')
-    let [tokenCopied, setTokenCopied] = useState(false);
+    console.log('Project Sidebar:', project)
+    // const panes = [
+    //     { menuItem: 'curl', render: () =>  <CurlPane projectId={project.id} token={token}/>},
+    //     { menuItem: 'nodejs', render: () => <NodePane projectId={project.id} token={token} />},
+    //     { menuItem: 'elixir', render: () => <ElixirPane projectId={project.id} token={token} />},
+    //     // { menuItem: 'java', render: () => null },
+    //     // { menuItem: 'scala', render: () => null },
+    //     // { menuItem: 'kotlin', render: () => null },
+    //     // { menuItem: 'ruby', render: () => null },
+    //     // { menuItem: 'go', render: () => null },
+    // ]
 
-    const panes = [
-        { menuItem: 'curl', render: () =>  <CurlPane projectId={project.id} token={token}/>},
-        { menuItem: 'nodejs', render: () => <NodePane projectId={project.id} token={token} />},
-        { menuItem: 'elixir', render: () => <ElixirPane projectId={project.id} token={token} />},
-        { menuItem: 'java', render: () => null },
-        { menuItem: 'scala', render: () => null },
-        { menuItem: 'kotlin', render: () => null },
-        { menuItem: 'ruby', render: () => null },
-        { menuItem: 'go', render: () => null },
-    ]
-    return (
-        project ? (
-            <div id="project-sidebar">
-                <label htmlFor="project-name">project:</label>
-                <Header as="h2" inverted>{project.name}</Header>
+    return project ? (
+        <div id="project-sidebar">
+            <label htmlFor="project-name">project:</label>
+            <Header as="h2" inverted>{project.name}</Header>
 
-                <label htmlFor="guid">id:</label>
-                <Header as="h3" inverted>{project.guid}</Header>
-                
-                <br/>
-                <span>
-                    <CopyToClipboard 
-                        text={token}
-                        onCopy={() => setTokenCopied(true)}
-                    >
-                        <Button color="purple" style={{fontFamily: 'monospace'}}>{tokenCopied ? 'token copied!' : 'copy token'}</Button>
-                    </CopyToClipboard>
-                </span>
-                <hr/>
-                <h2>Get Started</h2>
-                <Tab menu={{ inverted: true, id:"code-sample-menu", pointing: true}} panes={panes} />
-            </div>
-        ) : (
-            <h1>Loading...</h1>
-        )
+            <label htmlFor="guid">id:</label>
+            <Header as="h3" inverted>{project.guid}</Header>
+            
+            <br/>
+            <span>
+                {/* <CopyToClipboard 
+                    text={token}
+                    onCopy={() => setTokenCopied(true)}
+                >
+                    <Button color="purple" style={{fontFamily: 'monospace'}}>{tokenCopied ? 'token copied!' : 'copy token'}</Button>
+                </CopyToClipboard> */}
+            </span>
+            <hr/>
+            <h2>Get Started</h2>
+            {/* <Tab menu={{ inverted: true, id:"code-sample-menu", pointing: true}} panes={panes} /> */}
+        </div>
+    ) : (
+        <h1>Loading...</h1>
     )
 }
 

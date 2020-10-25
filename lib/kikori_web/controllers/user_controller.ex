@@ -8,12 +8,19 @@ defmodule KikoriWeb.UserController do
 
   action_fallback KikoriWeb.FallbackController
 
+  @doc """
+  List all users
+  """
   def index(conn, _params) do
     users = Accounts.list_users()
     render(conn, "index.json", users: users)
   end
 
+  @doc """
+  Create a new user
+  """
   def create(conn, %{"user" => user_params}) do
+    # IEx.pry
     with {:ok, %User{} = user} <- Accounts.create_user(user_params),
          {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
       conn |> render("auth_success.json", %{user: user, token: token})

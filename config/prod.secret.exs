@@ -23,11 +23,19 @@ secret_key_base = "whBTKkImubRyrK+FsJSgmiJjWiDBqit+4vlJqeYvEKnhQPI5BPUTI9J49yxI6
 #     You can generate one by calling: mix phx.gen.secret
 #     """
 
+# config :kikori, Kikori.Repo,
+#   username: "postgres",
+#   password: "postgres",
+#   database: "kikori_db",
+#   hostname: "db",
+#   show_sensitive_data_on_connection_error: true,
+#   pool_size: 10
 config :kikori, Kikori.Repo,
   username: "postgres",
   password: "postgres",
-  database: "kikori_db",
-  hostname: "db",
+  database: "kikori_dev",
+  # hostname: "host.docker.internal",
+  hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 

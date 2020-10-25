@@ -25,7 +25,7 @@ const PrivateRoute = ({children, ...remainingProps}) => {
         } else {setLoaded(true)}
     }, [user])
     
-    return loaded && (
+    return (
         <Route 
             {...remainingProps}
             render={({ location }) => RouteChoice(user, loaded, children, location)}

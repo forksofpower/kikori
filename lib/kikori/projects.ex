@@ -42,7 +42,7 @@ defmodule Kikori.Projects do
 
   """
   def get_project!(id) do
-    IEx.pry
+    # IEx.pry
     Repo.get!(Project, id) |> Repo.preload(:user)
   end
 

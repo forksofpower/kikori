@@ -24,7 +24,8 @@ defmodule KikoriWeb.Endpoint do
     at: "/",
     from: "assets/build",
     gzip: false,
-    only: ~w(index.html favicon.ico logo192.png logo512.png static service-worker.js manifest.json robots.txt)
+    only:
+      ~w(index.html favicon.ico logo192.png logo512.png static service-worker.js manifest.json robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

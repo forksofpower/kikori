@@ -10,11 +10,11 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :kikori, KikoriWeb.Endpoint,
-  url: [host: "db"],
+  # url: [host: "db"],
   server: true,
   load_from_system_env: true,
-  url: [host: Application.get_env(:kikori, :app_hostname), port: Application.get_env(:kikori, :app_port)],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  url: [host: Application.get_env(:kikori, :app_hostname), port: Application.get_env(:kikori, :app_port)]
+  # cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
 config :logger, level: :info

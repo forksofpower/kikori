@@ -4,25 +4,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectAllProjects, fetchProjects, selectProjectById, fetchOneProject } from '../../store/projects.slice';
 import { useState } from 'react';
 
-import { Grid, Button, Dimmer, Loader } from "semantic-ui-react";
+import { Grid, Dimmer, Loader } from "semantic-ui-react";
 import ProjectSidebar from "../Projects/ProjectSidebar";
-import LogMessage from '../Logs/LogMessage';
+// import LogMessage from '../Logs/LogMessage';
 import { isEmpty } from '../../helpers';
 import ProjectChannel from './ProjectChannel';
 import NavBar from '../NavBar';
 
 const Project = () => {
     let dispatch = useDispatch();
-    // let [project, setProject] = useState({})
     let [loaded, setLoaded] = useState(false)
     let { id } = useParams();
+    // let projects = useSelector(selectAllProjects)
 
     let project = useSelector((state) => {
         return selectProjectById(state, id)
     })
-
     
-    let projects = useSelector(selectAllProjects)
     
     useEffect(() => {
         dispatch(fetchOneProject(id))
@@ -30,15 +28,20 @@ const Project = () => {
 
     useEffect(() => {
         if (project) {
+            console.log("project:", project)
             setLoaded(true)
+        } else {
+            if (id) {
+                console.error("ERROR: NO PROJECT")
+            }
         }
     }, [project, id])
     
-    return !loaded ? ( 
+    return (!loaded && !project) ? (
             <Dimmer>
                 <Loader />
             </Dimmer> 
-        ): (
+        ) : (
             <Grid>
                 <Grid.Row style={{padding: 0, margin: 0}}>
                     <NavBar />
