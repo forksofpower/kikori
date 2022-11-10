@@ -4,7 +4,7 @@
     "faker": "^4.1.0",
     "normalizr": "^3.6.0",
     "react-hook-form": "^5.7.2",
-    "serve": "^11.3.2",
+    "serve": "^14.1.1",
     "webpack-cli": "^3.3.11"
   }
 }
